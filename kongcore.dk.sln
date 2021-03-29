@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31112.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "kongcore.dk.Web", "kongcore.dk.Web\", "{04A7722F-F443-473F-B654-A93A89AC7199}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.7.2"
+		ProjectReferences = "{d465290d-6fb3-48c9-9148-96610715e6ce}|kongcore.dk.Core.dll;"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_9140"
+		Debug.AspNetCompiler.PhysicalPath = "kongcore.dk.Web\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_9140\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_9140"
+		Release.AspNetCompiler.PhysicalPath = "kongcore.dk.Web\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_9140\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "9140"
+		SlnRelativePath = "kongcore.dk.Web\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+	ProjectSection(ProjectDependencies) = postProject
+		{D465290D-6FB3-48C9-9148-96610715E6CE} = {D465290D-6FB3-48C9-9148-96610715E6CE}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "kongcore.dk.Core", "kongcore.dk.Core\kongcore.dk.Core.csproj", "{D465290D-6FB3-48C9-9148-96610715E6CE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{04A7722F-F443-473F-B654-A93A89AC7199}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04A7722F-F443-473F-B654-A93A89AC7199}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{D465290D-6FB3-48C9-9148-96610715E6CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D465290D-6FB3-48C9-9148-96610715E6CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D465290D-6FB3-48C9-9148-96610715E6CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D465290D-6FB3-48C9-9148-96610715E6CE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6FA6765E-6EB4-4561-9E52-2CDD8B183C25}
+	EndGlobalSection
+EndGlobal
