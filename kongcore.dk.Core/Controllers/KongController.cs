@@ -1,4 +1,5 @@
-﻿using kongcore.dk.Core.Models;
+﻿using kongcore.dk.Core.Common;
+using kongcore.dk.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,13 @@ namespace kongcore.dk.Core.Controllers
             if (!ModelState.IsValid)
                 return CurrentUmbracoPage();
 
-            // Work with form data here
+            if(string.IsNullOrEmpty(model.Email) || string.IsNullOrEmpty(model.Name)|| string.IsNullOrEmpty(model.Subject) || string.IsNullOrEmpty(model.Message))
+                return CurrentUmbracoPage();
+
+            if(!Statics.IsValidEmail(model.Email))
+                return CurrentUmbracoPage();
+
+            Statics.Notification.Run(model.Email, "admin@kongcore.dk", "admin@kongcore.dk", model.Subject, model.Message);
 
             return RedirectToCurrentUmbracoPage();
         }
