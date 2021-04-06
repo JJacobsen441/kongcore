@@ -1,25 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
 namespace kongcore.dk.Core.Common
 {
     public class Statics
     {
-        public static bool IsDebug
+        public static void Visitor()
         {
-            get
-            {
-                bool isDebug = false;
-#if DEBUG
-                isDebug = true;
-#endif
-                return isDebug;
-            }
+            Statics.Notification.Run("admin@kongcore.dk", "admin@kongcore.dk", "admin@kongcore.dk", "visitor", "visitor");
+        }
+
+        public static bool IsDebug(HttpRequestBase req)
+        {
+            //Statics.Notification.Run("admin@kongcore.dk", "admin@kongcore.dk", "admin@kongcore.dk", req.Url.Host, req.Url.Host);
+            return req.Url.Host.Trim() != "kongcore-dk.s1.umbraco.io";
         }
 
         public static bool IsValidEmail(string email)

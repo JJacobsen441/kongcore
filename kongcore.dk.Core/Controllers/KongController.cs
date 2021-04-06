@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 using Umbraco.Web.Mvc;
 
@@ -12,6 +13,7 @@ namespace kongcore.dk.Core.Controllers
 {
     public class KongController : SurfaceController
     {
+        
         // GET: Kong
         [HttpPost]
         public ActionResult Submit(ContactFormViewModel model)
