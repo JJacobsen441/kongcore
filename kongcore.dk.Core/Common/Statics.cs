@@ -8,7 +8,7 @@ namespace kongcore.dk.Core.Common
     {
         public static void Visitor()
         {
-            Statics.Notification.Run("admin@kongcore.dk", "admin@kongcore.dk", "admin@kongcore.dk", "visitor", "visitor");
+            Statics.Notification.Run("mail@kongcore.dk", "mail@kongcore.dk", "mail@kongcore.dk", "visitor", "visitor");
         }
 
         public static bool IsDebug(HttpRequestBase req)
