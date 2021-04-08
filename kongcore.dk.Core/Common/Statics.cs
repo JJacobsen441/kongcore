@@ -6,9 +6,11 @@ namespace kongcore.dk.Core.Common
 {
     public class Statics
     {
-        public static void Visitor()
+        public static void Visitor(string ip)
         {
-            Statics.Notification.Run("mail@kongcore.dk", "mail@kongcore.dk", "mail@kongcore.dk", "visitor", "visitor");
+            string subject = "visitor";
+            string body = "who: " + ip;
+            Statics.Notification.Run("mail@kongcore.dk", "mail@kongcore.dk", "mail@kongcore.dk", subject, body);
         }
 
         public static bool IsDebug(HttpRequestBase req)
