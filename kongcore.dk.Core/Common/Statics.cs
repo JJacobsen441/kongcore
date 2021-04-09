@@ -8,15 +8,15 @@ namespace kongcore.dk.Core.Common
     {
         public static void Visitor(string ip)
         {
-            string subject = "visitor";
+            string subject = "visitor..";
             string body = "who: " + ip;
             Statics.Notification.Run("mail@kongcore.dk", "mail@kongcore.dk", "mail@kongcore.dk", subject, body);
         }
 
         public static bool IsDebug(HttpRequestBase req)
         {
-            //Statics.Notification.Run("admin@kongcore.dk", "admin@kongcore.dk", "admin@kongcore.dk", req.Url.Host, req.Url.Host);
-            return req.Url.Host.Trim() != "kongcore-dk.s1.umbraco.io";
+            //Statics.Notification.Run("mail@kongcore.dk", "mail@kongcore.dk", "mail@kongcore.dk", "host", req.Url.Host);
+            return req.Url.Host.Trim() != "kongcore-dk.s1.umbraco.io" && req.Url.Host.Trim() != "www.kongcore.dk";
         }
 
         public static bool IsValidEmail(string email)
