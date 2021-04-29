@@ -16,7 +16,7 @@ namespace kongcore.dk.Core.Controllers
         {
             HttpRequestBase httpRequestBase = new HttpRequestWrapper(System.Web.HttpContext.Current.Request);
             string ip = RequestHelpers.GetClientIpAddress(httpRequestBase);
-            Statics.Visitor(ip);
+            //Statics.Visitor(ip);
             // Create AMP specific content here...
             return CurrentTemplate(model);
         }
