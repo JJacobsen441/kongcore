@@ -19,7 +19,7 @@ namespace kongcore.dk.Core.Common
             HttpRequestBase httpRequestBase = new HttpRequestWrapper(System.Web.HttpContext.Current.Request);
             string ip = RequestHelpers.GetClientIpAddress(httpRequestBase);
 
-            string subject = "visitor..";
+            string subject = "visitor.."; 
             string body = "who: " + ip;
             Statics.Notification.Run("mail@kongcore.dk", "mail@kongcore.dk", "mail@kongcore.dk", subject, body);
         }
