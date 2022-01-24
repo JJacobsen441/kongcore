@@ -14,8 +14,8 @@ namespace kongcore.dk.Core.Controllers
         // Any request for the 'ProductAmpPage' template will be handled by this Action
         public ActionResult HomePage(ContentModel model)
         {
-            HttpRequestBase httpRequestBase = new HttpRequestWrapper(System.Web.HttpContext.Current.Request);
-            string ip = RequestHelpers.GetClientIpAddress(httpRequestBase);
+            //HttpRequestBase httpRequestBase = new HttpRequestWrapper(System.Web.HttpContext.Current.Request);
+            //string ip = RequestHelpers.GetClientIpAddress(httpRequestBase);
             //Statics.Visitor(ip);
             // Create AMP specific content here...
             return CurrentTemplate(model);

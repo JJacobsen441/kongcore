@@ -24,6 +24,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "kongcore.dk.Web", "kongcore
 		VWDPort = "9140"
 		SlnRelativePath = "kongcore.dk.Web\"
 		DefaultWebSiteLanguage = "Visual C#"
+		StartServerOnDebug = "false"
 	EndProjectSection
 	ProjectSection(ProjectDependencies) = postProject
 		{D465290D-6FB3-48C9-9148-96610715E6CE} = {D465290D-6FB3-48C9-9148-96610715E6CE}
