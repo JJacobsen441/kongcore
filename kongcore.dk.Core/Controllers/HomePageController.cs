@@ -20,6 +20,13 @@ namespace kongcore.dk.Core.Controllers
             // Create AMP specific content here...
             return CurrentTemplate(model);
         }
+
+        //public ActionResult SkillsMain()
+        //{
+        //    // Create AMP specific content here...
+        //    return CurrentTemplate(CurrentPage);
+        //}
+
         // All other request, eg the ProductPage template will be handled by the default 'Index' action
         public override ActionResult Index(ContentModel model)
         {
@@ -29,5 +36,4 @@ namespace kongcore.dk.Core.Controllers
             return CurrentTemplate(model);
         }
     }
-
 }
