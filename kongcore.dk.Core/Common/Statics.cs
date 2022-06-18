@@ -135,7 +135,16 @@ namespace kongcore.dk.Core.Common
         {
             //Statics.Notification.Run("mail@kongcore.dk", "mail@kongcore.dk", "mail@kongcore.dk", "host", req.Url.Host);
             return req.Url.Host.Trim() != "kongcore-dk.s1.umbraco.io" && req.Url.Host.Trim() != "www.kongcore.dk" && req.Url.Host.Trim() != "kongcore.dk";
-        }
+        }/**/
+
+        /*public static bool IsDebug()
+        {
+            bool isDebug = false;
+#if DEBUG
+            isDebug = true;
+#endif
+            return isDebug;
+        }/**/
 
         public static bool IsValidEmail(string email)
         {

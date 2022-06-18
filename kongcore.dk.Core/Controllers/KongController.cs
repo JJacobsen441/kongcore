@@ -55,8 +55,12 @@ namespace kongcore.dk.Core.Controllers
         [HttpPost]
         public ActionResult Search(SearchViewModel model)
         {
-            int failPageId = 1095;// Int32.Parse((string)CurrentPage.GetProperty("fail").GetValue());
-            
+
+            //int failPageId = Statics.IsDebug(Request) ? 1095 : 1103;// Int32.Parse((string)CurrentPage.GetProperty("fail").GetValue());
+            var _root = Umbraco.ContentAtRoot().First();
+            var fail = _root.Children.Where(x => x.ContentType.Alias == "submitFail").First();
+            int failPageId = fail.Id;
+
 
             if (!ModelState.IsValid)
                 return RedirectToUmbracoPage(failPageId);
