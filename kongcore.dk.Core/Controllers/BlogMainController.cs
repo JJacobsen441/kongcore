@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using kongcore.dk.Core.Models;
+using System.Web.Mvc;
 
 namespace kongcore.dk.Core.Controllers
 {
@@ -8,7 +9,11 @@ namespace kongcore.dk.Core.Controllers
         public ActionResult BlogMain()
         {
             // Create AMP specific content here...
-            return View("BlogMain", CurrentPage);
+            BlogViewModel _m = new BlogViewModel(CurrentPage);
+            _m.content = CurrentPage;
+            _m.data = null;
+
+            return View("BlogMain", (BlogViewModel)_m);
         }
 
         //public override ActionResult Index()
