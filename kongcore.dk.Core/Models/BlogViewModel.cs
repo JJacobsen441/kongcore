@@ -7,7 +7,13 @@ namespace kongcore.dk.Core.Models
     {
         public BlogViewModel(IPublishedContent content) : base(content)
         {
+            
+        }
 
+        public BlogViewModel(IPublishedContent content, IEnumerable<IPublishedContent> data) : base(content)
+        {
+            this.content = content;
+            this.data = data;
         }
 
         public IPublishedContent content { get; set; }

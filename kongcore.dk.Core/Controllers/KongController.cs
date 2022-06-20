@@ -92,9 +92,10 @@ namespace kongcore.dk.Core.Controllers
                 return RedirectToUmbracoPage(failPageId);
 
             //ViewBag.Items = res.Count() >= 0 ? res : null;
-            BlogViewModel _m = new BlogViewModel(CurrentPage);
-            _m.content = CurrentPage;
-            _m.data = res.Count() >= 0 ? res : null;
+            IPublishedContent _c = CurrentPage;
+            IEnumerable<IPublishedContent> _d = res.Count() >= 0 ? res : null;
+            BlogViewModel _m = new BlogViewModel(_c, _d);
+            //_m.content = CurrentPage;
 
             return View("BlogMain", (BlogViewModel)_m);
         }

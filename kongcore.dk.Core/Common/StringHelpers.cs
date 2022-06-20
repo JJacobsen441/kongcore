@@ -52,35 +52,6 @@ namespace kongcore.dk.Core.Common
             return str;
         }
 
-        //public static string OnlyAlphanumeric(string str, bool allow_upper, char[] allowed, out bool ok)
-        //{
-        //    ok = true;
-        //    if (str == null)
-        //    {
-        //        ok = false;
-        //        return null;
-        //    }
-
-        //    char[] numeric = { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
-        //    char[] alphalower = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'æ', 'ø', 'å' };
-        //    char[] alphaupper = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'Æ', 'Ø', 'Å' };
-
-        //    //string result="";
-        //    for (int i = 0; i < str.Length; i++)
-        //    {
-        //        char c = str.ElementAt(i);
-        //        if (allowed.Contains(c) || (allow_upper && alphaupper.Contains(c)) || alphalower.Contains(c) || numeric.Contains(c))
-        //            ;
-        //        else
-        //        {
-        //            str = RemoveCharacter(str, c);
-        //            ok = false;
-        //            i--;
-        //        }
-        //    }
-        //    return str;
-        //}
-
         public static string OnlyAlphanumeric(string str, bool allow_newline, bool allow_upper, string allow_tag, char[] allowed, out bool ok)
         {
             ok = true;

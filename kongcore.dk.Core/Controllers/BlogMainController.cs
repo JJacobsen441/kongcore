@@ -9,9 +9,9 @@ namespace kongcore.dk.Core.Controllers
         public ActionResult BlogMain()
         {
             // Create AMP specific content here...
-            BlogViewModel _m = new BlogViewModel(CurrentPage);
-            _m.content = CurrentPage;
-            _m.data = null;
+            BlogViewModel _m = new BlogViewModel(CurrentPage, null);
+            //_m.content = CurrentPage;
+            //_m.data = null;
 
             return View("BlogMain", (BlogViewModel)_m);
         }

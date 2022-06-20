@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Net.Mail;
 using System.Text.RegularExpressions;
 using System.Web;
 using www.kongcore.dk.Common;
@@ -33,12 +32,7 @@ namespace kongcore.dk.Core.Common
                 .Replace("<body>", "")
                 .Replace("</body>", "")
                 .Trim();
-            //if(res.Count(x => x.ToString() == "<p>") > 1)
-            //{
-            //    res = res.Substring(res.IndexOf("<p>") + 3, res.Length);
-            //    res = res.Substring(0, res.LastIndexOf("</p>"));
-            //    res = res.Trim();
-            //}
+            
             return html;
         }
 
@@ -60,16 +54,15 @@ namespace kongcore.dk.Core.Common
 
         private static string RegEx(string inputString) 
         {
+            if (String.IsNullOrEmpty(inputString))
+                return "";
+
             //Regex regex = new Regex(@"(\.|[a-z]|[A-Z]|[0-9])*@(\.|[a-z]|[A-Z]|[0-9])*");
             Regex regex2 = new Regex(@"([a-zA-Z0-9\.]*)\@([a-zA-Z0-9\.]*)");
-            //foreach (Match match in regex.Matches(inputString))
-            //{
-            //match.Value == "xx@yahoo.com.my"
-            //string name = match.Groups[1]; // "xx"
-            //string domain = match.Groups[2]; // "yahoo.com.my"
+            
             Match m = regex2.Match(inputString);
-            string email = m.Groups[1] + "@" + m.Groups[2]; // "yahoo.com.my"
-            //}
+            string email = m.Groups[1] + "@" + m.Groups[2];
+            
             return email;
         }
 
@@ -131,11 +124,17 @@ namespace kongcore.dk.Core.Common
             return text;
         }
 
-        public static bool IsDebug(HttpRequestBase req)
+        public static bool IsDebug()
         {
-            //Statics.Notification.Run("mail@kongcore.dk", "mail@kongcore.dk", "mail@kongcore.dk", "host", req.Url.Host);
-            return req.Url.Host.Trim() != "kongcore-dk.s1.umbraco.io" && req.Url.Host.Trim() != "www.kongcore.dk" && req.Url.Host.Trim() != "kongcore.dk";
-        }/**/
+            HttpRequestBase httpRequestBase = new HttpRequestWrapper(System.Web.HttpContext.Current.Request);
+            string host = httpRequestBase.Url.Host.Trim();
+
+            return host == "localhost"; 
+            //return 
+            //    host != "kongcore-dk.s1.umbraco.io" &&
+            //    host != "www.kongcore.dk" &&
+            //    host != "kongcore.dk";
+        }
 
         /*public static bool IsDebug()
         {
@@ -152,7 +151,8 @@ namespace kongcore.dk.Core.Common
             {
                 if (string.IsNullOrEmpty(email))
                     return false;
-                var addr = new System.Net.Mail.MailAddress(email);
+
+                MailAddress addr = new MailAddress(email);
                 return addr.Address == email;
             }
             catch
@@ -163,43 +163,8 @@ namespace kongcore.dk.Core.Common
 
         public static string Base64Encode(string plainText)
         {
-            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+            byte[] plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
             return System.Convert.ToBase64String(plainTextBytes);
-        }
-
-        public static bool IsNullOrEmpty<T>(ICollection<T> value) where T : class
-        {
-            return value == null || value.Count() == 0;
-        }
-
-        public static bool IsNull<T>(T value) where T : class
-        {
-            return value == null;
-        }
-
-        public static bool IsNotNull<T>(T value) where T : class
-        {
-            return value != null;
-        }
-
-        public static bool IsNull<T>(T? nullableValue) where T : struct
-        {
-            return !nullableValue.HasValue;
-        }
-
-        public static bool IsNotNull<T>(T? nullableValue) where T : struct
-        {
-            return nullableValue.HasValue;
-        }
-
-        public static bool HasValue<T>(T? nullableValue) where T : struct
-        {
-            return nullableValue.HasValue;
-        }
-
-        public static bool HasNoValue<T>(T? nullableValue) where T : struct
-        {
-            return !nullableValue.HasValue;
-        }
+        }        
     }
 }
