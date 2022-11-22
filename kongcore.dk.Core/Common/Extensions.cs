@@ -8,10 +8,18 @@ namespace kongcore.dk.Core.Common
 {
     public static class Extensions
     {
+        public static string FormatParagraph(this string _s)
+        {
+            if (string.IsNullOrEmpty(_s))
+                throw new Exception();
+
+            return Statics.RemoveFirstParagraphTag(Statics.RichStrip("" + _s));
+        }
+
         public static MvcHtmlString HtmlWithBreaksFor(this HtmlHelper html, string text/*, Expression<Func<TModel, TValue>> expression*/)
         {
             if (string.IsNullOrEmpty(text))
-                return MvcHtmlString.Empty;
+                throw new Exception();
 
             string model = "" + html.Raw(text.Replace(Environment.NewLine, "<br />"));
 
@@ -21,7 +29,7 @@ namespace kongcore.dk.Core.Common
         public static string StringWithBreaksFor(string text)
         {
             if (string.IsNullOrEmpty(text))
-                return "";
+                throw new Exception();
 
             string model = "" + text.Replace(Environment.NewLine, "<br />");
 
@@ -30,14 +38,13 @@ namespace kongcore.dk.Core.Common
 
         public static string HtmlEncode(string html)
         {
-            if (!string.IsNullOrEmpty(html))
-            {
-                var httpUtil = new HttpServerUtilityWrapper(HttpContext.Current.Server);
-                string encoded = httpUtil.HtmlEncode(html).Replace(Environment.NewLine, "<br />");
+            if (string.IsNullOrEmpty(html))
+                throw new Exception();
 
-                return encoded;
-            }
-            return "";
+            var httpUtil = new HttpServerUtilityWrapper(HttpContext.Current.Server);
+            string encoded = httpUtil.HtmlEncode(html).Replace(Environment.NewLine, "<br />");
+
+            return encoded;
         }
 
         public static IEnumerable<T> Randomize<T>(this IEnumerable<T> source)
