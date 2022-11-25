@@ -11,42 +11,35 @@ using Umbraco.Web.Models;
 /// </summary>
 namespace kongcore.dk.Core.Controllers
 {
-    public class SkillsMainController : Umbraco.Web.Mvc.RenderMvcController
+    public class SimpleContentPageController : Umbraco.Web.Mvc.RenderMvcController
     {
         ContentHelper helper;
-        
-        public SkillsMainController() : base()
+
+        public SimpleContentPageController() : base()
         {
             //root = new Root(CurrentPage);
         }
 
         // Any request for the 'ProductAmpPage' template will be handled by this Action
-        public ActionResult SkillsMain(ContentModel model)
+        public ActionResult SimpleContentPage(ContentModel model)
         {
             try
             {
                 // Create AMP specific content here...
-                DTO_SkillsMain dto = new DTO_SkillsMain(CurrentPage);
+                DTO_SimpleContentPage dto = new DTO_SimpleContentPage(CurrentPage);
 
                 helper = new ContentHelper(Umbraco, CurrentPage);
                 IPublishedContent root = helper._Root();
                 IPublishedContent current = helper._CurrentRoot();
 
-                dto.skillsTitle = helper.GetValue(current, "skillsTitle");
-                dto.skillsBodyText = helper.GetValue(current, "skillsBodyText").FormatParagraph();
-                var selection = helper.NodesType(current, "skillsItem");
-                dto.skills = helper.GetItems(selection, null, "skillTitle", "skillContent", null);
+                dto.bodyHeader = helper.GetValue(current, "bodyHeader");
+                dto.bodyText = helper.GetValue(current, "bodyText").RichStrip();
 
-                IPublishedContent block1Node = helper.NodeType(root, "block1");
-                dto.block1header = helper.GetPropertyValue(block1Node, "block1Header");
-                dto.block1text = helper.GetPropertyValue(block1Node, "block1Text").FormatParagraph();
-                dto.block1buttontext = helper.GetPropertyValue(block1Node, "block1ButtonText");
+                dto.contactEmployee1 = helper.GetValue(current, "contactEmployee1").FormatEmail();
+                dto.contactEmployee2 = helper.GetValue(current, "contactEmployee2").FormatEmail();
 
-                IPublishedContent block3Node = helper.NodeType(root, "block2");
-                dto.block2header = helper.GetPropertyValue(block3Node, "block2Header");
-                dto.block2text = helper.GetPropertyValue(block3Node, "block2Text").FormatParagraph();
-                dto.block2buttontext = helper.GetPropertyValue(block3Node, "block2ButtonText");
-                
+                StaticsHelper.Visitor();
+
                 return CurrentTemplate(dto);
             }
             catch (Exception _e)

@@ -13,7 +13,34 @@ namespace kongcore.dk.Core.Common
             if (string.IsNullOrEmpty(_s))
                 throw new Exception();
 
-            return Statics.RemoveFirstParagraphTag(Statics.RichStrip("" + _s));
+            return StaticsHelper.RemoveFirstParagraphTag(StaticsHelper.RichStrip("" + _s));
+        }
+
+        public static string RichStrip(this string _s)
+        {
+            if (string.IsNullOrEmpty(_s))
+                throw new Exception();
+
+            return StaticsHelper.RichStrip("" + _s);
+        }
+
+        public static string FormatEmail(this string _s)
+        {
+            if (string.IsNullOrEmpty(_s))
+                throw new Exception();
+
+            return StaticsHelper.RichStrip("" +
+                   StaticsHelper.FormatEmailIcon("" +
+                   StaticsHelper.FormatPhoneIcon("" +
+                   StaticsHelper.FormatMail("" + _s))));
+        }
+
+        public static string FormatEmailSimple(this string _s)
+        {
+            if (string.IsNullOrEmpty(_s))
+                throw new Exception();
+
+            return StaticsHelper.FormatMail("" + _s);
         }
 
         public static MvcHtmlString HtmlWithBreaksFor(this HtmlHelper html, string text/*, Expression<Func<TModel, TValue>> expression*/)
@@ -61,6 +88,11 @@ namespace kongcore.dk.Core.Common
         public static bool IsNull<T>(this T value)
         {
             return value == null;
-        }        
+        }
+
+        public static bool IsNullOrEmpty(this string value)
+        {
+            return value == null || value.Length == 0;
+        }
     }
 }

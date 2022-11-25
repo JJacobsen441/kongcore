@@ -1,6 +1,6 @@
 ﻿using System.Data.Entity;
 
-namespace kongcore.dk.Core.DB
+namespace kongcore.dk.Core.Models.DB
 {
     public partial class DBContext : DbContext
     {

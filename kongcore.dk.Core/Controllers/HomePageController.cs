@@ -15,10 +15,10 @@ namespace kongcore.dk.Core.Controllers
 {
     public class HomePageController : Umbraco.Web.Mvc.RenderMvcController
     {
-        Root root;
+        ContentHelper helper;
+        
         public HomePageController()
         {
-            root = new Root(Umbraco);
         }
 
         // Any request for the 'ProductAmpPage' template will be handled by this Action
@@ -28,76 +28,57 @@ namespace kongcore.dk.Core.Controllers
             {
                 //throw new Exception();
                 // Create AMP specific content here...
-                
+
+                //throw new Exception();
 
                 DTO_HomePage dto = new DTO_HomePage(CurrentPage);
 
-                IPublishedContent site = root._Root();
+                helper = new ContentHelper(Umbraco, CurrentPage);
+                IPublishedContent root = helper._Root();
+                IPublishedContent current = helper._CurrentRoot();
 
-                dto.quote1 = "" + site.Value("quote1");
-                dto.quote2 = "" + site.Value("quote2");
-                dto.quote3 = "" + site.Value("quote3");
+                dto.aboutTitle = helper.GetValue(current, "aboutTitle");
+                dto.aboutText = helper.GetValue(current, "aboutText").FormatParagraph();
 
-                dto.aboutTitle = "" + site.Value("aboutTitle");
-                dto.aboutText = ("" + site.Value("aboutText")).FormatParagraph();
+                dto.conclusionTitle = helper.GetValue(current, "conclusionTitle");
+                dto.conclusionText = helper.GetValue(current, "conclusionText").FormatParagraph();
 
-                dto.bodyText1Header = "" + site.Value("bodyText1Header");
-                dto.bodyText1 = ("" + site.Value("bodyText1")).FormatParagraph();
-                dto.bodyText2Header = "" + site.Value("bodyText2Header");
-                dto.bodyText2 = ("" + site.Value("bodyText2")).FormatParagraph();
-                dto.bodyText3Header = "" + site.Value("bodyText3Header");
-                dto.bodyText3 = ("" + site.Value("bodyText3")).FormatParagraph();
-                dto.bodyText4Header = "" + site.Value("bodyText4Header");
-                dto.bodyText4 = ("" + site.Value("bodyText4")).FormatParagraph();
+                dto.bodyText1Header = helper.GetValue(current, "bodyText1Header");
+                dto.bodyText1 = helper.GetValue(current, "bodyText1").FormatParagraph();
+                dto.bodyText2Header = helper.GetValue(current, "bodyText2Header");
+                dto.bodyText2 = helper.GetValue(current, "bodyText2").FormatParagraph();
+                dto.bodyText3Header = helper.GetValue(current, "bodyText3Header");
+                dto.bodyText3 = helper.GetValue(current, "bodyText3").FormatParagraph();
+                dto.bodyText4Header = helper.GetValue(current, "bodyText4Header");
+                dto.bodyText4 = helper.GetValue(current, "bodyText4").FormatParagraph();
 
-                dto.conclusionTitle = "" + site.Value("conclusionTitle");
-                dto.conclusionText = ("" + site.Value("conclusionText")).FormatParagraph();
+                dto.quote1 = helper.GetValue(current, "quote1");
+                dto.quote2 = helper.GetValue(current, "quote2");
+                dto.quote3 = helper.GetValue(current, "quote3");
 
-                IPublishedContent block1Node = root.ChildType("block1");
-                dto.block1header = "" + block1Node.GetProperty("block1Header").GetValue();
-                dto.block1text = ("" + block1Node.GetProperty("block1Text").GetValue()).FormatParagraph();
-                dto.block1buttontext = "" + block1Node.GetProperty("block1ButtonText").GetValue();
+                IPublishedContent block1Node = helper.NodeType(root, "block1");
+                dto.block1header = helper.GetPropertyValue(block1Node, "block1Header");
+                dto.block1text = helper.GetPropertyValue(block1Node, "block1Text").FormatParagraph();
+                dto.block1buttontext = helper.GetPropertyValue(block1Node, "block1ButtonText");
             
-                IPublishedContent block3Node = root.ChildType("block3");
-                dto.block3header = "" + block3Node.GetProperty("block3Header").GetValue();
-                dto.block3text = ("" + block3Node.GetProperty("block3Text").GetValue()).FormatParagraph();
-                dto.block3buttontext = "" + block3Node.GetProperty("block3ButtonText").GetValue();
+                IPublishedContent block3Node = helper.NodeType(root, "block3");
+                dto.block3header = helper.GetPropertyValue(block3Node, "block3Header");
+                dto.block3text = helper.GetPropertyValue(block3Node, "block3Text").FormatParagraph();
+                dto.block3buttontext = helper.GetPropertyValue(block3Node, "block3ButtonText");
             
-
-
-
-                List<Site> list = new List<Site>();
-
-                IPublishedContent article = root.ChildType("articles");
-                List<IPublishedContent> articles = root.ChildsType(article, "articlesItem").OrderByDescending(x => x.CreateDate).ToList();
-            
-                foreach (var item in articles)
-                {
-                    var v1 = item.GetProperty("articleImageBW")?.GetValue();
-                    var v3 = ((List<IPublishedContent>)v1)?.FirstOrDefault();
-                    if (!v3.IsNull())
-                    {
-                        IPublishedContent mediaItem = Umbraco.Media(v3.Id);
-                        if (!mediaItem.IsNull())
-                        {
-                            string link = "" + item.GetProperty("articleLink").GetValue();
-                            string url = mediaItem.Url();
-                            string alt = @item.Name;
-
-                            list.Add(new Site() { link = link, url = url, alt = alt });
-                        }
-                    }
-                }
-            
-                dto.sites = list;
-            
+                IPublishedContent article = helper.NodeType(root, "articles");
+                List<IPublishedContent> articles = helper.NodesType(article, "articlesItem").OrderByDescending(x => x.CreateDate).ToList();
+                dto.sites = helper.GetItems(articles.ToList(), "articleImageBW", null, null, "articleLink");
+                            
                 return CurrentTemplate(dto);
             }
             catch (Exception _e)
             {
                 //Response.Redirect("/fail");
+                if (helper.IsNull())
+                    helper = new ContentHelper(Umbraco, CurrentPage);
 
-                var fail = root.ChildName("Fail");;
+                var fail = helper.NodeName(helper._Root(), "Fail");;
                 int failPageId = fail.Id;
 
                 var redirectPage = Umbraco.Content(failPageId); //page id here

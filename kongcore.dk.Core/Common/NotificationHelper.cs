@@ -3,7 +3,7 @@ using System.Net.Mail;
 
 namespace kongcore.dk.Core.Common
 {
-    public static class Notification
+    public static class NotificationHelper
     {
         public static void Run(string from, string to, string cred, string subject, string body)
         {

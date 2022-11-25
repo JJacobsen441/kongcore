@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 
 namespace kongcore.dk.Core.Common
 {
-    public class Characters
+    public class CharacterHelper
     {
         public static char[] All(bool withreturnnewline)
         {
@@ -20,6 +16,7 @@ namespace kongcore.dk.Core.Common
                 a = a.Concat(new char[] { r }).ToArray();
             return a;
         }
+
         public static char[] Limited(bool withsemi)
         {
             char s = ';';
@@ -28,34 +25,46 @@ namespace kongcore.dk.Core.Common
                 a = a.Concat(new char[] { s }).ToArray();
             return a;
         }
-        public static char[] VeryLimited()
+
+        public static char[] VeryLimited(bool withunderscore)
         {
-            return new char[] { ' ', '\'', '-', '&', '#' };
+            char s = '_';
+            char[] _a = new char[] { ' ', '\'', '-', '&', '#' };
+            if (withunderscore)
+                _a = _a.Concat(new char[] { s }).ToArray();
+            return _a;
         }
+
         public static char[] Website()
         {
             return new char[] { '-', '/', '.', ':' };
         }
+
         public static char[] Category()
         {
             return new char[] { ' ', '-', '.' };
         }
+
         public static char[] Name()
         {
             return new char[] { ' ', '-', '*' };
         }
+
         public static char[] Country()
         {
             return new char[] { ' ', '-' };
         }
+
         public static char[] Address()
         {
             return new char[] { ' ', '.', ',', '-', '\'' };
         }
+
         public static char[] Space()
         {
             return new char[] { ' ' };
         }
+
         public static char[] Param()
         {
             return new char[] { '0', '1', ':', '_' };

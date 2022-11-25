@@ -11,42 +11,53 @@ using Umbraco.Web.Models;
 /// </summary>
 namespace kongcore.dk.Core.Controllers
 {
-    public class SkillsMainController : Umbraco.Web.Mvc.RenderMvcController
+    public class ArticlesItemController : Umbraco.Web.Mvc.RenderMvcController
     {
         ContentHelper helper;
         
-        public SkillsMainController() : base()
+        public ArticlesItemController() : base()
         {
             //root = new Root(CurrentPage);
         }
 
         // Any request for the 'ProductAmpPage' template will be handled by this Action
-        public ActionResult SkillsMain(ContentModel model)
+        public ActionResult ArticlesItem(ContentModel model)
         {
             try
             {
                 // Create AMP specific content here...
-                DTO_SkillsMain dto = new DTO_SkillsMain(CurrentPage);
+
+                DTO_ArticleItem dto = new DTO_ArticleItem(CurrentPage);
 
                 helper = new ContentHelper(Umbraco, CurrentPage);
                 IPublishedContent root = helper._Root();
                 IPublishedContent current = helper._CurrentRoot();
 
-                dto.skillsTitle = helper.GetValue(current, "skillsTitle");
-                dto.skillsBodyText = helper.GetValue(current, "skillsBodyText").FormatParagraph();
-                var selection = helper.NodesType(current, "skillsItem");
-                dto.skills = helper.GetItems(selection, null, "skillTitle", "skillContent", null);
+                dto.articleTitle = helper.GetValue(current, "articleTitle");
+                dto.articleLink = helper.GetValue(current, "articleLink");
+                dto.articleContent = helper.GetValue(current, "articleContent").FormatParagraph();
+
+                dto.articleAboutHeader = helper.GetValue(current, "articleAboutHeader");
+                dto.articleAboutText = helper.GetValue(current, "articleAboutText").FormatParagraph();
+                dto.articleTaskHeader = helper.GetValue(current, "articleTaskHeader");
+                dto.articleTaskText = helper.GetValue(current, "articleTaskText").FormatParagraph();
 
                 IPublishedContent block1Node = helper.NodeType(root, "block1");
                 dto.block1header = helper.GetPropertyValue(block1Node, "block1Header");
                 dto.block1text = helper.GetPropertyValue(block1Node, "block1Text").FormatParagraph();
                 dto.block1buttontext = helper.GetPropertyValue(block1Node, "block1ButtonText");
 
-                IPublishedContent block3Node = helper.NodeType(root, "block2");
-                dto.block2header = helper.GetPropertyValue(block3Node, "block2Header");
-                dto.block2text = helper.GetPropertyValue(block3Node, "block2Text").FormatParagraph();
-                dto.block2buttontext = helper.GetPropertyValue(block3Node, "block2ButtonText");
-                
+                IPublishedContent block2Node = helper.NodeType(root, "block2");
+                dto.block2header = helper.GetPropertyValue(block2Node, "block2Header");
+                dto.block2text = helper.GetPropertyValue(block2Node, "block2Text").FormatParagraph();
+                dto.block2buttontext = helper.GetPropertyValue(block2Node, "block2ButtonText");
+
+
+                dto.img = helper.GetImage(current, "articleImageMain", "articleTitle");
+                dto.img1 = helper.GetImage(current, "articleImageMob1", "articleTitle");
+                dto.img2 = helper.GetImage(current, "articleImageMob2", "articleTitle");
+                dto.img3 = helper.GetImage(current, "articleImageMob3", "articleTitle");
+
                 return CurrentTemplate(dto);
             }
             catch (Exception _e)
@@ -63,6 +74,7 @@ namespace kongcore.dk.Core.Controllers
                 return Redirect(redirectPage.Url());
             }
         }
+
         // All other request, eg the ProductPage template will be handled by the default 'Index' action
         //public override ActionResult Index(ContentModel model)
         //{

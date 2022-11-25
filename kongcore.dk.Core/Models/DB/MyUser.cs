@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace kongcore.dk.Core.DB
+namespace kongcore.dk.Core.Models.DB
 {
     [Table("MyUser")]
     public class MyUser

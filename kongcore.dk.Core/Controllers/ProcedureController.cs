@@ -11,31 +11,31 @@ using Umbraco.Web.Models;
 /// </summary>
 namespace kongcore.dk.Core.Controllers
 {
-    public class SkillsMainController : Umbraco.Web.Mvc.RenderMvcController
+    public class ProcedureController : Umbraco.Web.Mvc.RenderMvcController
     {
         ContentHelper helper;
-        
-        public SkillsMainController() : base()
+
+        public ProcedureController() : base()
         {
             //root = new Root(CurrentPage);
         }
 
         // Any request for the 'ProductAmpPage' template will be handled by this Action
-        public ActionResult SkillsMain(ContentModel model)
+        public ActionResult Procedure(ContentModel model)
         {
             try
             {
                 // Create AMP specific content here...
-                DTO_SkillsMain dto = new DTO_SkillsMain(CurrentPage);
+                DTO_Procedure dto = new DTO_Procedure(CurrentPage);
 
                 helper = new ContentHelper(Umbraco, CurrentPage);
                 IPublishedContent root = helper._Root();
                 IPublishedContent current = helper._CurrentRoot();
 
-                dto.skillsTitle = helper.GetValue(current, "skillsTitle");
-                dto.skillsBodyText = helper.GetValue(current, "skillsBodyText").FormatParagraph();
-                var selection = helper.NodesType(current, "skillsItem");
-                dto.skills = helper.GetItems(selection, null, "skillTitle", "skillContent", null);
+                dto.procedureHeader = helper.GetValue(current, "procedureHeader");
+                dto.procedureBodyText = helper.GetValue(current, "procedureBodyText").RichStrip();
+                dto.procedureMail = helper.GetValue(current, "procedureMail").FormatEmailSimple();
+                dto.procedureText = helper.GetValue(current, "procedureText");
 
                 IPublishedContent block1Node = helper.NodeType(root, "block1");
                 dto.block1header = helper.GetPropertyValue(block1Node, "block1Header");
@@ -46,7 +46,7 @@ namespace kongcore.dk.Core.Controllers
                 dto.block2header = helper.GetPropertyValue(block3Node, "block2Header");
                 dto.block2text = helper.GetPropertyValue(block3Node, "block2Text").FormatParagraph();
                 dto.block2buttontext = helper.GetPropertyValue(block3Node, "block2ButtonText");
-                
+
                 return CurrentTemplate(dto);
             }
             catch (Exception _e)

@@ -3,13 +3,6 @@ using Umbraco.Core.Models.PublishedContent;
 
 namespace kongcore.dk.Core.Models.DTOs
 {
-    public class Site
-    {
-        public string link { get; set; }
-        public string url { get; set; }
-        public string alt { get; set; }
-    }
-
     public class DTO_HomePage : Umbraco.Web.PublishedModels.HomePage
     {
         public DTO_HomePage(IPublishedContent _c) : base(_c)
@@ -17,7 +10,7 @@ namespace kongcore.dk.Core.Models.DTOs
             this._content = _c;
         }
 
-        public DTO_HomePage(IPublishedContent _c, List<Site> _s) : base(_c)
+        public DTO_HomePage(IPublishedContent _c, List<Item> _s) : base(_c)
         {
             this._content = _c;
             this.sites = _s;
@@ -49,6 +42,6 @@ namespace kongcore.dk.Core.Models.DTOs
         public string block3buttontext { get; set; }
 
 
-        public List<Site> sites = new List<Site>();
+        public List<Item> sites = new List<Item>();
     }
 }

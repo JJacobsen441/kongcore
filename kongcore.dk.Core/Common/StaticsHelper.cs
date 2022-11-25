@@ -6,16 +6,16 @@ using www.kongcore.dk.Common;
 
 namespace kongcore.dk.Core.Common
 {
-    public class Statics
+    public class StaticsHelper
     {
         public static void Visitor()
         {
             HttpRequestBase httpRequestBase = new HttpRequestWrapper(System.Web.HttpContext.Current.Request);
-            string ip = RequestHelpers.GetClientIpAddress(httpRequestBase);
+            string ip = RequestHelper.GetClientIpAddress(httpRequestBase);
 
             string subject = "visitor.."; 
             string body = "who: " + ip;
-            Notification.Run("mail@kongcore.dk", "mail@kongcore.dk", "mail@kongcore.dk", subject, body);
+            NotificationHelper.Run("mail@kongcore.dk", "mail@kongcore.dk", "mail@kongcore.dk", subject, body);
         }
 
         public static string RichStrip(string html)
