@@ -13,6 +13,9 @@ namespace kongcore.dk.Core.Common
             HttpRequestBase httpRequestBase = new HttpRequestWrapper(System.Web.HttpContext.Current.Request);
             string ip = RequestHelper.GetClientIpAddress(httpRequestBase);
 
+            if (ip == "80.161.50.61" || ip == "127.0.0.1")
+                return;
+
             string subject = "visitor.."; 
             string body = "who: " + ip;
             NotificationHelper.Run("mail@kongcore.dk", "mail@kongcore.dk", "mail@kongcore.dk", subject, body);
