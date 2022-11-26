@@ -20,7 +20,7 @@ namespace kongcore.dk.Core.Models.DTOs
         //    this.sites = _s;
         //}
 
-        public void Setup(ViewDataDictionary view, ContentHelper root)
+        public void ToDTO(ViewDataDictionary view, ContentHelper helper)
         {
             css_line2 = (string)view["page"] == "blogmain" ?
                 "alt1" :
@@ -57,25 +57,35 @@ namespace kongcore.dk.Core.Models.DTOs
                 (string)view["page"] == "skillsmain" ?
                 "caviardreams" :
                 "caviardreams";
+
+            IPublishedContent root = helper._Root();
+            IPublishedContent current = helper._CurrentRoot();
             
-            var site = root._Root();
             //var selection = root.Nodes(site);
-            var campNode = root.NodeType(site, "campaignMain");
-            var settingsNode = root.NodeType(site, "settings");
+            var campNode = helper.NodeType(root, "campaignMain");
+            var settingsNode = helper.NodeType(root, "settings");
 
             if (campNode.IsNull())
                 throw new Exception();
             if (settingsNode.IsNull())
                 throw new Exception();
 
-            string camp = root.GetPropertyValue(campNode, "campaignText");
-            string link = root.GetPropertyValue(campNode, "campaignLink");
-            string link_text = root.GetPropertyValue(campNode, "campaignLinkText");
+            string camp = helper.GetPropertyValue(campNode, "campaignText");
+            string link = helper.GetPropertyValue(campNode, "campaignLink");
+            string link_text = helper.GetPropertyValue(campNode, "campaignLinkText");
             campaign = "<span class=\"bold\">" + camp + "</span>" + (string.IsNullOrEmpty("" + link) ? "" : "&nbsp;<a class=\"display-inline bold " + css_camp + "\" href=\"" + link + "\">" + link_text.Replace(" ", "&nbsp;") + "</a>");
 
-            sitename = root.GetPropertyValue(settingsNode, "siteName");
-            slogan1 = root.GetPropertyValue(settingsNode, "siteSlogan");
-            slogan2 = root.GetPropertyValue(settingsNode, "siteSlogan2");
+            sitename = helper.GetPropertyValue(settingsNode, "siteName");
+            slogan1 = helper.GetPropertyValue(settingsNode, "siteSlogan");
+            slogan2 = helper.GetPropertyValue(settingsNode, "siteSlogan2");
+
+            footerTextContact = helper.GetValueFallback(root, "footerTextContact").Replace(" ", " ");
+            footerTextContact2 = helper.GetValueFallback(root, "footerTextContact2").FormatEmailSimple();
+            footerTextContact3 = helper.GetValueFallback(root, "footerTextContact2");
+
+            footerText = helper.GetValueFallback(root, "footerText").RichStrip();
+            year = DateTime.Now.Year.ToString();
+            footerText2 = helper.GetValueFallback(root, "footerText2");
         }
 
         public IPublishedContent _content { get; set; }
@@ -91,5 +101,12 @@ namespace kongcore.dk.Core.Models.DTOs
         public string sitename { get; set; }
         public string slogan1 { get; set; }
         public string slogan2 { get; set; }
+
+        public string footerTextContact { get; set; }
+        public string footerTextContact2 { get; set; }
+        public string footerTextContact3 { get; set; }
+        public string footerText { get; set; }
+        public string year { get; set; }
+        public string footerText2 { get; set; }
     }
 }

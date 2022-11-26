@@ -24,7 +24,7 @@ namespace kongcore.dk.Core.Common
             return StaticsHelper.RichStrip("" + _s);
         }
 
-        public static string FormatEmail(this string _s)
+        public static string FormatEmailAdvanced(this string _s)
         {
             if (string.IsNullOrEmpty(_s))
                 throw new Exception();

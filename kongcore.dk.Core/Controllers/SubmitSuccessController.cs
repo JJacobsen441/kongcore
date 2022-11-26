@@ -40,7 +40,7 @@ namespace kongcore.dk.Core.Controllers
                 ViewBag.bodytext = helper.GetValue(current, "bodyText");
 
                 DTO_Master master = new DTO_Master(CurrentPage);
-                master.Setup(ViewData, helper);
+                master.ToDTO(ViewData, helper);
                 ViewBag.master = master;
 
                 return CurrentTemplate(CurrentPage);

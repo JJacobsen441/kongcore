@@ -55,7 +55,7 @@ namespace kongcore.dk.Core.Controllers
                 ViewBag.bodytext = helper.GetValue(current, "blogTitle");
 
                 DTO_Master master = new DTO_Master(CurrentPage);
-                master.Setup(ViewData, helper);
+                master.ToDTO(ViewData, helper);
                 ViewBag.master = master;
 
                 return View("BlogMain", (DTO_BlogMain)dto);
@@ -72,7 +72,7 @@ namespace kongcore.dk.Core.Controllers
                 ViewBag.bodytext = "Ups";
 
                 DTO_Master master = new DTO_Master(CurrentPage);
-                master.Setup(ViewData, helper);
+                master.ToDTO(ViewData, helper);
                 ViewBag.master = master;
 
 

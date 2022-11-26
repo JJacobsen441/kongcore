@@ -63,7 +63,7 @@ namespace kongcore.dk.Core.Controllers
                 ViewBag.bodytext = "Case";
 
                 DTO_Master master = new DTO_Master(CurrentPage);
-                master.Setup(ViewData, helper);
+                master.ToDTO(ViewData, helper);
                 ViewBag.master = master;
 
                 return CurrentTemplate(dto);
@@ -80,7 +80,7 @@ namespace kongcore.dk.Core.Controllers
                 ViewBag.bodytext = "Ups";
 
                 DTO_Master master = new DTO_Master(CurrentPage);
-                master.Setup(ViewData, helper);
+                master.ToDTO(ViewData, helper);
                 ViewBag.master = master;
 
 

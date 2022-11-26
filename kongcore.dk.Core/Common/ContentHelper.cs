@@ -50,6 +50,18 @@ namespace kongcore.dk.Core.Common
             if (elem.IsNull())
                 throw new Exception();
 
+            string res = "" + item.Value(elem, fallback: Fallback.ToAncestors);
+
+            return res;
+        }
+
+        public string GetValueFallback(IPublishedContent item, string elem)
+        {
+            if (item.IsNull())
+                throw new Exception();
+            if (elem.IsNull())
+                throw new Exception();
+
             string res = "" + item.Value(elem);
 
             return res;

@@ -35,15 +35,15 @@ namespace kongcore.dk.Core.Controllers
                 dto.bodyHeader = helper.GetValue(current, "bodyHeader");
                 dto.bodyText = helper.GetValue(current, "bodyText").RichStrip();
 
-                dto.contactEmployee1 = helper.GetValue(current, "contactEmployee1").FormatEmail();
-                dto.contactEmployee2 = helper.GetValue(current, "contactEmployee2").FormatEmail();
+                dto.contactEmployee1 = helper.GetValue(current, "contactEmployee1").FormatEmailAdvanced();
+                dto.contactEmployee2 = helper.GetValue(current, "contactEmployee2").FormatEmailAdvanced();
 
                 ViewBag.title = "Kontakt En Kodegorilla";
                 ViewBag.page = "contact";
                 ViewBag.bodytext = helper.GetValue(current, "pageTitle");
 
                 DTO_Master master = new DTO_Master(CurrentPage);
-                master.Setup(ViewData, helper);
+                master.ToDTO(ViewData, helper);
                 ViewBag.master = master;
 
                 StaticsHelper.Visitor();
@@ -62,7 +62,7 @@ namespace kongcore.dk.Core.Controllers
                 ViewBag.bodytext = "Ups";
 
                 DTO_Master master = new DTO_Master(CurrentPage);
-                master.Setup(ViewData, helper);
+                master.ToDTO(ViewData, helper);
                 ViewBag.master = master;
 
 
