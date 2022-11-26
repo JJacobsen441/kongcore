@@ -69,14 +69,32 @@ namespace kongcore.dk.Core.Controllers
                 IPublishedContent article = helper.NodeType(root, "articles");
                 List<IPublishedContent> articles = helper.NodesType(article, "articlesItem").OrderByDescending(x => x.CreateDate).ToList();
                 dto.sites = helper.GetItems(articles.ToList(), "articleImageBW", null, null, "articleLink");
-                            
+
+                ViewBag.title = "Mere End Bare Kodeaber";
+                ViewBag.page = "homepage";
+                ViewBag.bodytext = helper.GetValue(current, "bodyText");
+
+                DTO_Master master = new DTO_Master(CurrentPage);
+                master.Setup(ViewData, helper);
+                ViewBag.master = master;
+
                 return CurrentTemplate(dto);
             }
             catch (Exception _e)
             {
                 //Response.Redirect("/fail");
+
                 if (helper.IsNull())
                     helper = new ContentHelper(Umbraco, CurrentPage);
+
+                ViewBag.title = "Fail";
+                ViewBag.page = "submitfail";
+                ViewBag.bodytext = "Ups";
+
+                DTO_Master master = new DTO_Master(CurrentPage);
+                master.Setup(ViewData, helper);
+                ViewBag.master = master;
+
 
                 var fail = helper.NodeName(helper._Root(), "Fail");;
                 int failPageId = fail.Id;

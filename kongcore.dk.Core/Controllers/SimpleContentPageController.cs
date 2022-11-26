@@ -38,6 +38,14 @@ namespace kongcore.dk.Core.Controllers
                 dto.contactEmployee1 = helper.GetValue(current, "contactEmployee1").FormatEmail();
                 dto.contactEmployee2 = helper.GetValue(current, "contactEmployee2").FormatEmail();
 
+                ViewBag.title = "Kontakt En Kodegorilla";
+                ViewBag.page = "contact";
+                ViewBag.bodytext = helper.GetValue(current, "pageTitle");
+
+                DTO_Master master = new DTO_Master(CurrentPage);
+                master.Setup(ViewData, helper);
+                ViewBag.master = master;
+
                 StaticsHelper.Visitor();
 
                 return CurrentTemplate(dto);
@@ -45,8 +53,18 @@ namespace kongcore.dk.Core.Controllers
             catch (Exception _e)
             {
                 //Response.Redirect("/fail");
+
                 if (helper.IsNull())
                     helper = new ContentHelper(Umbraco, CurrentPage);
+
+                ViewBag.title = "Fail";
+                ViewBag.page = "submitfail";
+                ViewBag.bodytext = "Ups";
+
+                DTO_Master master = new DTO_Master(CurrentPage);
+                master.Setup(ViewData, helper);
+                ViewBag.master = master;
+
 
                 var fail = helper.NodeName(helper._Root(), "Fail"); ;
                 int failPageId = fail.Id;

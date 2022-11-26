@@ -58,13 +58,31 @@ namespace kongcore.dk.Core.Controllers
                 dto.img2 = helper.GetImage(current, "articleImageMob2", "articleTitle");
                 dto.img3 = helper.GetImage(current, "articleImageMob3", "articleTitle");
 
+                ViewBag.title = "KongCore Case";
+                ViewBag.page = "case";
+                ViewBag.bodytext = "Case";
+
+                DTO_Master master = new DTO_Master(CurrentPage);
+                master.Setup(ViewData, helper);
+                ViewBag.master = master;
+
                 return CurrentTemplate(dto);
             }
             catch (Exception _e)
             {
                 //Response.Redirect("/fail");
+
                 if (helper.IsNull())
                     helper = new ContentHelper(Umbraco, CurrentPage);
+
+                ViewBag.title = "Fail";
+                ViewBag.page = "submitfail";
+                ViewBag.bodytext = "Ups";
+
+                DTO_Master master = new DTO_Master(CurrentPage);
+                master.Setup(ViewData, helper);
+                ViewBag.master = master;
+
 
                 var fail = helper.NodeName(helper._Root(), "Fail"); ;
                 int failPageId = fail.Id;

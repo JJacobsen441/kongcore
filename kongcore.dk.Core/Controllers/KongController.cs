@@ -29,6 +29,10 @@ namespace kongcore.dk.Core.Controllers
                 if (!ok) 
                     throw new Exception();
 
+                helper = new ContentHelper(Umbraco, CurrentPage);
+                IPublishedContent root = helper._Root();
+                IPublishedContent current = helper._CurrentRoot();
+
                 string message =
                     model.name + "<br />" +
                     model.email + "<br />" +
@@ -36,10 +40,29 @@ namespace kongcore.dk.Core.Controllers
 
                 NotificationHelper.Run(model.email, "info@kongcore.dk", "info@kongcore.dk", model.subject, Extensions.StringWithBreaksFor(message));
 
+                ViewBag.title = "Success";
+                ViewBag.page = "submitsuccess";
+                ViewBag.bodytext = "Besked sendt";
+
+                DTO_Master master = new DTO_Master(CurrentPage);
+                master.Setup(ViewData, helper);
+                ViewBag.master = master;
+
                 Response.Redirect("/success");
             }
             catch (Exception _e)
             {
+                if (helper.IsNull())
+                    helper = new ContentHelper(Umbraco, CurrentPage);
+
+                ViewBag.title = "Fail";
+                ViewBag.page = "submitfail";
+                ViewBag.bodytext = "Ups";
+
+                DTO_Master master = new DTO_Master(CurrentPage);
+                master.Setup(ViewData, helper);
+                ViewBag.master = (DTO_Master)master;
+
                 Response.Redirect("/fail"); 
                 return;
             }
@@ -84,13 +107,31 @@ namespace kongcore.dk.Core.Controllers
                 dto.block2text = helper.GetPropertyValue(block2Node, "block2Text").FormatParagraph();
                 dto.block2buttontext = helper.GetPropertyValue(block2Node, "block2ButtonText");
 
+                ViewBag.title = "Kodegorillaen Blogger";
+                ViewBag.page = "blogmain";
+                ViewBag.bodytext = helper.GetValue(current, "blogTitle");
+
+                DTO_Master master = new DTO_Master(CurrentPage);
+                master.Setup(ViewData, helper);
+                ViewBag.master = master;
+
                 return View("BlogMain", (DTO_BlogMain)dto);
             }
             catch (Exception _e)
             {
                 //Response.Redirect("/fail");
-                if(helper.IsNull())
+
+                if (helper.IsNull())
                     helper = new ContentHelper(Umbraco, CurrentPage);
+
+                ViewBag.title = "Fail";
+                ViewBag.page = "submitfail";
+                ViewBag.bodytext = "Ups";
+
+                DTO_Master master = new DTO_Master(CurrentPage);
+                master.Setup(ViewData, helper);
+                ViewBag.master = master;
+
 
                 var fail = helper.NodeName(helper._Root(), "Fail"); ;
                 int failPageId = fail.Id;

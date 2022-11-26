@@ -86,6 +86,18 @@ namespace kongcore.dk.Core.Common
             return cont;
         }
 
+        public List<IPublishedContent> Nodes(IPublishedContent site)
+        {
+            if (site.IsNull())
+                throw new Exception();
+            
+            List<IPublishedContent> list = site.Children.Where(x => x.IsVisible()).ToList();
+            if (list.IsNull())
+                throw new Exception();
+
+            return list;
+        }
+
         public List<IPublishedContent> NodesType(IPublishedContent site, string elem)
         {
             if (site.IsNull())
