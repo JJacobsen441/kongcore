@@ -1,4 +1,5 @@
 ﻿using kongcore.dk.Core.Common;
+using kongcore.dk.Core.Models.BIZ;
 using kongcore.dk.Core.Models.DTOs;
 using System;
 using System.Web.Mvc;
@@ -26,16 +27,17 @@ namespace kongcore.dk.Core.Controllers
             try
             {
                 // Create AMP specific content here...
-                DTO_SkillsMain dto = new DTO_SkillsMain(CurrentPage);
 
                 helper = new ContentHelper(Umbraco, CurrentPage);
                 IPublishedContent root = helper._Root();
                 IPublishedContent current = helper._CurrentRoot();
 
+                DTO_SkillsMain dto = new DTO_SkillsMain(CurrentPage);
+
                 dto.skillsTitle = helper.GetValue(current, "skillsTitle");
                 dto.skillsBodyText = helper.GetValue(current, "skillsBodyText").FormatParagraph();
-                var selection = helper.NodesType(current, "skillsItem");
-                dto.skills = helper.GetItems(selection, null, "skillTitle", "skillContent", null);
+                BIZ_SkillsMain biz_skill = new BIZ_SkillsMain();
+                dto.skills = biz_skill.GetSkills(helper);
 
                 IPublishedContent block1Node = helper.NodeType(root, "block1");
                 dto.block1header = helper.GetPropertyValue(block1Node, "block1Header");
@@ -51,8 +53,9 @@ namespace kongcore.dk.Core.Controllers
                 ViewBag.page = "skillsmain";
                 ViewBag.bodytext = helper.GetValue(current, "skillsTitle");
 
+                BIZ_Master biz = new BIZ_Master();
                 DTO_Master master = new DTO_Master(CurrentPage);
-                master.ToDTO(ViewData, helper);
+                master = biz.ToDTO(ViewData, helper);
                 ViewBag.master = master;
 
                 return CurrentTemplate(dto);
@@ -68,8 +71,9 @@ namespace kongcore.dk.Core.Controllers
                 ViewBag.page = "submitfail";
                 ViewBag.bodytext = "Ups";
 
+                BIZ_Master biz = new BIZ_Master();
                 DTO_Master master = new DTO_Master(CurrentPage);
-                master.ToDTO(ViewData, helper);
+                master = biz.ToDTO(ViewData, helper);
                 ViewBag.master = master;
 
 

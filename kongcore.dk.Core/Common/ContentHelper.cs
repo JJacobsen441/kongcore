@@ -50,7 +50,7 @@ namespace kongcore.dk.Core.Common
             if (elem.IsNull())
                 throw new Exception();
 
-            string res = "" + item.Value(elem, fallback: Fallback.ToAncestors);
+            string res = "" + item.Value(elem);
 
             return res;
         }
@@ -62,7 +62,7 @@ namespace kongcore.dk.Core.Common
             if (elem.IsNull())
                 throw new Exception();
 
-            string res = "" + item.Value(elem);
+            string res = "" + item.Value(elem, fallback: Fallback.ToAncestors);
 
             return res;
         }
@@ -143,7 +143,7 @@ namespace kongcore.dk.Core.Common
 
 
 
-        public IPublishedContent GetMedia(IPublishedContent item, string elem)
+        public IPublishedContent GetMedia1(IPublishedContent item, string elem)
         {
             if (item.IsNull())
                 throw new Exception();
@@ -169,68 +169,28 @@ namespace kongcore.dk.Core.Common
             return mediaItem;
         }
 
-        public Img GetImage(IPublishedContent item, string elem, string alt)
+        public IPublishedContent GetMedia2(IPublishedContent item, string elem)
         {
             if (item.IsNull())
                 throw new Exception();
             if (elem.IsNull())
                 throw new Exception();
-            if (alt.IsNull())
-                throw new Exception();
-            
-            List<IPublishedContent> mediaItem = item.Value<IEnumerable<IPublishedContent>>(elem).ToList();
-            if (mediaItem.IsNull() || mediaItem.Count <= 0)
+                        
+            List<IPublishedContent> v1 = item.Value<IEnumerable<IPublishedContent>>(elem).ToList();
+            if (v1.IsNull() || v1.Count <= 0)
                 return null;
             
-            var v3 = mediaItem.FirstOrDefault();
-            var v4 = mediaItem.Skip(1).FirstOrDefault();
+            var v3 = v1.FirstOrDefault();
+            var v4 = v1.Skip(1).FirstOrDefault();
             if (v3.IsNull() && v4.IsNull())
                 return null;
 
             var v5 = v3 is Folder ? v4 : v3;
+            IPublishedContent mediaItem = helper.Media(v5.Id);
+            if (mediaItem.IsNull())
+                return null;
 
-            string url = v5.Url();
-            string article_title = "" + _CurrentRoot().Value(alt);
-            Img _i = new Img() { url = url, alt = article_title };
-
-            return _i;
-            
-        }
-
-
-
-
-
-
-        public List<Item> GetItems(List<IPublishedContent> items, string in_image_main, string in_title, string in_content, string in_link)
-        {
-            List<Item> list = new List<Item>();
-            foreach (var item in items)
-            {
-                IPublishedContent mediaItem = null;
-                if(!in_image_main.IsNull())
-                {
-                    mediaItem = GetMedia(item, in_image_main);
-
-                    if (mediaItem.IsNull())
-                        continue;
-                }
-
-                string title = in_title.IsNull() ? "" : "" + item.Value(in_title);
-                string content = in_content.IsNull() ? "" : StaticsHelper.RichStrip("" + @item.Value(in_content));
-                string link = in_link.IsNull() ? "" : "" + item.Value(in_link);
-
-                string url = item.Url();
-                string alt = item.Name;
-                string media_url = mediaItem?.Url();
-                string name = item.Name;
-                string create_date = "" + item.CreateDate.ToString("dd/MM-yyyy");
-
-
-                list.Add(new Item() { title = title, url = url, alt = alt, media_url = media_url, name = name, content = content, link = link, create_date = create_date });
-            }
-
-            return list;
-        }
+            return mediaItem;
+        }/**/
     }
 }

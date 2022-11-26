@@ -10,7 +10,7 @@ namespace kongcore.dk.Core.Models.DTOs
             this._content = _c;
         }
 
-        public DTO_HomePage(IPublishedContent _c, List<Item> _s) : base(_c)
+        public DTO_HomePage(IPublishedContent _c, List<Site> _s) : base(_c)
         {
             this._content = _c;
             this.sites = _s;
@@ -42,6 +42,6 @@ namespace kongcore.dk.Core.Models.DTOs
         public string block3buttontext { get; set; }
 
 
-        public List<Item> sites = new List<Item>();
+        public List<Site> sites = new List<Site>();
     }
 }

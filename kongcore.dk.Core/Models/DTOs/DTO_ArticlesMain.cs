@@ -28,6 +28,6 @@ namespace kongcore.dk.Core.Models.DTOs
         public string block2text { get; set; }
         public string block2buttontext { get; set; }
 
-        public List<Item> articles = new List<Item>();
+        public List<Article> articles = new List<Article>();
     }
 }

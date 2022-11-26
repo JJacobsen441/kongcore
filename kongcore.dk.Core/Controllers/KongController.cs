@@ -44,8 +44,9 @@ namespace kongcore.dk.Core.Controllers
                 ViewBag.page = "submitsuccess";
                 ViewBag.bodytext = "Besked sendt";
 
+                BIZ_Master biz = new BIZ_Master();
                 DTO_Master master = new DTO_Master(CurrentPage);
-                master.ToDTO(ViewData, helper);
+                master = biz.ToDTO(ViewData, helper);
                 ViewBag.master = master;
 
                 Response.Redirect("/success");
@@ -59,9 +60,10 @@ namespace kongcore.dk.Core.Controllers
                 ViewBag.page = "submitfail";
                 ViewBag.bodytext = "Ups";
 
+                BIZ_Master biz = new BIZ_Master();
                 DTO_Master master = new DTO_Master(CurrentPage);
-                master.ToDTO(ViewData, helper);
-                ViewBag.master = (DTO_Master)master;
+                master = biz.ToDTO(ViewData, helper);
+                ViewBag.master = master;
 
                 Response.Redirect("/fail"); 
                 return;
@@ -87,13 +89,8 @@ namespace kongcore.dk.Core.Controllers
                 IPublishedContent root = helper._Root();
                 IPublishedContent current = helper._CurrentRoot();
 
-                List<Item> list = new List<Item>();
-                BIZ_BlogMain biz = new BIZ_BlogMain();
-                List<IPublishedContent> _res = biz.GetBlogs(helper, model);
-                list = helper.GetItems(_res.ToList(), "imagePicker", "blogItemTitle", "blogItemContent", null);
-                                
-                DTO_BlogMain dto = new DTO_BlogMain(CurrentPage, list);
-
+                DTO_BlogMain dto = new DTO_BlogMain(CurrentPage);
+                
                 dto.blogTitle = helper.GetValue(current, "blogTitle");
                 dto.blogBodyText = helper.GetValue(current, "blogBodyText").FormatParagraph();
 
@@ -107,12 +104,19 @@ namespace kongcore.dk.Core.Controllers
                 dto.block2text = helper.GetPropertyValue(block2Node, "block2Text").FormatParagraph();
                 dto.block2buttontext = helper.GetPropertyValue(block2Node, "block2ButtonText");
 
+                BIZ_BlogMain biz_blog = new BIZ_BlogMain();
+                dto.blogs = biz_blog.GetBlogs(helper, model);
+
+
+
+
                 ViewBag.title = "Kodegorillaen Blogger";
                 ViewBag.page = "blogmain";
                 ViewBag.bodytext = helper.GetValue(current, "blogTitle");
 
+                BIZ_Master biz_master = new BIZ_Master();
                 DTO_Master master = new DTO_Master(CurrentPage);
-                master.ToDTO(ViewData, helper);
+                master = biz_master.ToDTO(ViewData, helper);
                 ViewBag.master = master;
 
                 return View("BlogMain", (DTO_BlogMain)dto);
@@ -128,8 +132,9 @@ namespace kongcore.dk.Core.Controllers
                 ViewBag.page = "submitfail";
                 ViewBag.bodytext = "Ups";
 
+                BIZ_Master biz = new BIZ_Master();
                 DTO_Master master = new DTO_Master(CurrentPage);
-                master.ToDTO(ViewData, helper);
+                master = biz.ToDTO(ViewData, helper);
                 ViewBag.master = master;
 
 

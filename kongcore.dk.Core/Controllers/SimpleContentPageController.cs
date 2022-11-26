@@ -1,4 +1,5 @@
 ﻿using kongcore.dk.Core.Common;
+using kongcore.dk.Core.Models.BIZ;
 using kongcore.dk.Core.Models.DTOs;
 using System;
 using System.Web.Mvc;
@@ -26,11 +27,12 @@ namespace kongcore.dk.Core.Controllers
             try
             {
                 // Create AMP specific content here...
-                DTO_SimpleContentPage dto = new DTO_SimpleContentPage(CurrentPage);
 
                 helper = new ContentHelper(Umbraco, CurrentPage);
                 IPublishedContent root = helper._Root();
                 IPublishedContent current = helper._CurrentRoot();
+
+                DTO_SimpleContentPage dto = new DTO_SimpleContentPage(CurrentPage);
 
                 dto.bodyHeader = helper.GetValue(current, "bodyHeader");
                 dto.bodyText = helper.GetValue(current, "bodyText").RichStrip();
@@ -42,8 +44,9 @@ namespace kongcore.dk.Core.Controllers
                 ViewBag.page = "contact";
                 ViewBag.bodytext = helper.GetValue(current, "pageTitle");
 
+                BIZ_Master biz = new BIZ_Master();
                 DTO_Master master = new DTO_Master(CurrentPage);
-                master.ToDTO(ViewData, helper);
+                master = biz.ToDTO(ViewData, helper);
                 ViewBag.master = master;
 
                 StaticsHelper.Visitor();
@@ -61,8 +64,9 @@ namespace kongcore.dk.Core.Controllers
                 ViewBag.page = "submitfail";
                 ViewBag.bodytext = "Ups";
 
+                BIZ_Master biz = new BIZ_Master();
                 DTO_Master master = new DTO_Master(CurrentPage);
-                master.ToDTO(ViewData, helper);
+                master = biz.ToDTO(ViewData, helper);
                 ViewBag.master = master;
 
 

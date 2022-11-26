@@ -1,4 +1,5 @@
 ﻿using kongcore.dk.Core.Common;
+using kongcore.dk.Core.Models.BIZ;
 using kongcore.dk.Core.Models.DTOs;
 using System;
 using System.Web.Mvc;
@@ -28,19 +29,21 @@ namespace kongcore.dk.Core.Controllers
 
                 //throw new Exception();
 
-                DTO_HomePage dto = new DTO_HomePage(CurrentPage);
 
                 helper = new ContentHelper(Umbraco, CurrentPage);
                 IPublishedContent root = helper._Root();
                 IPublishedContent current = helper._CurrentRoot();
+
+                DTO_HomePage dto = new DTO_HomePage(CurrentPage);
 
 
                 ViewBag.title = "Mere End Bare Kodeaber";
                 ViewBag.page = "success";
                 ViewBag.bodytext = helper.GetValue(current, "bodyText");
 
+                BIZ_Master biz = new BIZ_Master();
                 DTO_Master master = new DTO_Master(CurrentPage);
-                master.ToDTO(ViewData, helper);
+                master = biz.ToDTO(ViewData, helper);
                 ViewBag.master = master;
 
                 return CurrentTemplate(CurrentPage);

@@ -1,4 +1,5 @@
 ﻿using kongcore.dk.Core.Common;
+using kongcore.dk.Core.Models.BIZ;
 using kongcore.dk.Core.Models.DTOs;
 using System;
 using System.Linq;
@@ -28,18 +29,15 @@ namespace kongcore.dk.Core.Controllers
             {
                 // Create AMP specific content here...
 
-                DTO_BlogMain dto = new DTO_BlogMain(CurrentPage);
-
                 helper = new ContentHelper(Umbraco, CurrentPage);
                 IPublishedContent root = helper._Root();
                 IPublishedContent current = helper._CurrentRoot();
 
+                DTO_BlogMain dto = new DTO_BlogMain(CurrentPage);
+
                 dto.blogTitle = helper.GetValue(current, "blogTitle");
                 dto.blogBodyText = helper.GetValue(current, "blogBodyText").FormatParagraph();
-                            
-                var blogs = helper.NodesType(current, "blogItem").OrderByDescending(x => x.CreateDate);
-                dto.blogs = helper.GetItems(blogs.ToList(), "imagePicker", "blogItemTitle", "blogItemContent", null);
-                
+                                
                 IPublishedContent block1Node = helper.NodeType(root, "block1");
                 dto.block1header = helper.GetPropertyValue(block1Node, "block1Header");
                 dto.block1text = helper.GetPropertyValue(block1Node, "block1Text").FormatParagraph();
@@ -50,12 +48,21 @@ namespace kongcore.dk.Core.Controllers
                 dto.block2text = helper.GetPropertyValue(block2Node, "block2Text").FormatParagraph();
                 dto.block2buttontext = helper.GetPropertyValue(block2Node, "block2ButtonText");
 
+                BIZ_BlogMain biz_blogs = new BIZ_BlogMain();
+                dto.blogs = biz_blogs.GetBlogs(helper, null);
+
+
+
+
+
+
                 ViewBag.title = "Kodegorillaen Blogger";
                 ViewBag.page = "blogmain";
                 ViewBag.bodytext = helper.GetValue(current, "blogTitle");
 
+                BIZ_Master biz_master = new BIZ_Master();
                 DTO_Master master = new DTO_Master(CurrentPage);
-                master.ToDTO(ViewData, helper);
+                master = biz_master.ToDTO(ViewData, helper);
                 ViewBag.master = master;
 
                 return View("BlogMain", (DTO_BlogMain)dto);
@@ -71,8 +78,9 @@ namespace kongcore.dk.Core.Controllers
                 ViewBag.page = "submitfail";
                 ViewBag.bodytext = "Ups";
 
+                BIZ_Master biz = new BIZ_Master();
                 DTO_Master master = new DTO_Master(CurrentPage);
-                master.ToDTO(ViewData, helper);
+                master = biz.ToDTO(ViewData, helper);
                 ViewBag.master = master;
 
 

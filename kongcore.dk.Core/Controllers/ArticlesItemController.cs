@@ -1,4 +1,5 @@
 ﻿using kongcore.dk.Core.Common;
+using kongcore.dk.Core.Models.BIZ;
 using kongcore.dk.Core.Models.DTOs;
 using System;
 using System.Web.Mvc;
@@ -27,11 +28,11 @@ namespace kongcore.dk.Core.Controllers
             {
                 // Create AMP specific content here...
 
-                DTO_ArticleItem dto = new DTO_ArticleItem(CurrentPage);
-
                 helper = new ContentHelper(Umbraco, CurrentPage);
                 IPublishedContent root = helper._Root();
                 IPublishedContent current = helper._CurrentRoot();
+
+                DTO_ArticleItem dto = new DTO_ArticleItem(CurrentPage);
 
                 dto.articleTitle = helper.GetValue(current, "articleTitle");
                 dto.articleLink = helper.GetValue(current, "articleLink");
@@ -52,18 +53,19 @@ namespace kongcore.dk.Core.Controllers
                 dto.block2text = helper.GetPropertyValue(block2Node, "block2Text").FormatParagraph();
                 dto.block2buttontext = helper.GetPropertyValue(block2Node, "block2ButtonText");
 
-
-                dto.img = helper.GetImage(current, "articleImageMain", "articleTitle");
-                dto.img1 = helper.GetImage(current, "articleImageMob1", "articleTitle");
-                dto.img2 = helper.GetImage(current, "articleImageMob2", "articleTitle");
-                dto.img3 = helper.GetImage(current, "articleImageMob3", "articleTitle");
+                BIZ_ArticleItem biz_article = new BIZ_ArticleItem();
+                dto.img = biz_article.GetImage(helper, "articleImageMain", "articleTitle");
+                dto.img1 = biz_article.GetImage(helper, "articleImageMob1", "articleTitle");
+                dto.img2 = biz_article.GetImage(helper, "articleImageMob2", "articleTitle");
+                dto.img3 = biz_article.GetImage(helper, "articleImageMob3", "articleTitle");
 
                 ViewBag.title = "KongCore Case";
                 ViewBag.page = "case";
                 ViewBag.bodytext = "Case";
 
+                BIZ_Master biz = new BIZ_Master();
                 DTO_Master master = new DTO_Master(CurrentPage);
-                master.ToDTO(ViewData, helper);
+                master = biz.ToDTO(ViewData, helper);
                 ViewBag.master = master;
 
                 return CurrentTemplate(dto);
@@ -79,8 +81,9 @@ namespace kongcore.dk.Core.Controllers
                 ViewBag.page = "submitfail";
                 ViewBag.bodytext = "Ups";
 
+                BIZ_Master biz = new BIZ_Master();
                 DTO_Master master = new DTO_Master(CurrentPage);
-                master.ToDTO(ViewData, helper);
+                master = biz.ToDTO(ViewData, helper);
                 ViewBag.master = master;
 
 

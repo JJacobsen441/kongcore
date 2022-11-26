@@ -1,4 +1,5 @@
 ﻿using kongcore.dk.Core.Common;
+using kongcore.dk.Core.Models.BIZ;
 using kongcore.dk.Core.Models.DTOs;
 using System;
 using System.Collections.Generic;
@@ -31,11 +32,11 @@ namespace kongcore.dk.Core.Controllers
 
                 //throw new Exception();
 
-                DTO_HomePage dto = new DTO_HomePage(CurrentPage);
-
                 helper = new ContentHelper(Umbraco, CurrentPage);
                 IPublishedContent root = helper._Root();
                 IPublishedContent current = helper._CurrentRoot();
+
+                DTO_HomePage dto = new DTO_HomePage(CurrentPage);
 
                 dto.aboutTitle = helper.GetValue(current, "aboutTitle");
                 dto.aboutText = helper.GetValue(current, "aboutText").FormatParagraph();
@@ -65,17 +66,21 @@ namespace kongcore.dk.Core.Controllers
                 dto.block3header = helper.GetPropertyValue(block3Node, "block3Header");
                 dto.block3text = helper.GetPropertyValue(block3Node, "block3Text").FormatParagraph();
                 dto.block3buttontext = helper.GetPropertyValue(block3Node, "block3ButtonText");
-            
-                IPublishedContent article = helper.NodeType(root, "articles");
-                List<IPublishedContent> articles = helper.NodesType(article, "articlesItem").OrderByDescending(x => x.CreateDate).ToList();
-                dto.sites = helper.GetItems(articles.ToList(), "articleImageBW", null, null, "articleLink");
+
+                BIZ_HomePage biz_home = new BIZ_HomePage();
+                dto.sites = biz_home.GetSites(helper);
+
+
+
+
 
                 ViewBag.title = "Mere End Bare Kodeaber";
                 ViewBag.page = "homepage";
                 ViewBag.bodytext = helper.GetValue(current, "bodyText");
 
+                BIZ_Master biz = new BIZ_Master();
                 DTO_Master master = new DTO_Master(CurrentPage);
-                master.ToDTO(ViewData, helper);
+                master = biz.ToDTO(ViewData, helper);
                 ViewBag.master = master;
 
                 return CurrentTemplate(dto);
@@ -91,8 +96,9 @@ namespace kongcore.dk.Core.Controllers
                 ViewBag.page = "submitfail";
                 ViewBag.bodytext = "Ups";
 
+                BIZ_Master biz = new BIZ_Master();
                 DTO_Master master = new DTO_Master(CurrentPage);
-                master.ToDTO(ViewData, helper);
+                master = biz.ToDTO(ViewData, helper);
                 ViewBag.master = master;
 
 

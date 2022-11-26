@@ -1,4 +1,5 @@
 ﻿using kongcore.dk.Core.Common;
+using kongcore.dk.Core.Models.BIZ;
 using kongcore.dk.Core.Models.DTOs;
 using System;
 using System.Collections.Generic;
@@ -28,11 +29,12 @@ namespace kongcore.dk.Core.Controllers
             try
             {
                 // Create AMP specific content here...
-                DTO_ArticlesMain dto = new DTO_ArticlesMain(CurrentPage);
 
                 helper = new ContentHelper(Umbraco, CurrentPage);
                 IPublishedContent root = helper._Root();
                 IPublishedContent current = helper._CurrentRoot();
+
+                DTO_ArticlesMain dto = new DTO_ArticlesMain(CurrentPage);
 
                 dto.articlesTitle = helper.GetValue(current, "articlesTitle");
                 dto.articlesBodyText = helper.GetValue(current, "articlesBodyText").FormatParagraph();
@@ -47,15 +49,16 @@ namespace kongcore.dk.Core.Controllers
                 dto.block2text = helper.GetPropertyValue(block3Node, "block2Text").FormatParagraph();
                 dto.block2buttontext = helper.GetPropertyValue(block3Node, "block2ButtonText");
 
-                var articles = helper.NodesType(current, "articlesItem").OrderByDescending(x => x.CreateDate);
-                dto.articles = helper.GetItems(articles.ToList(), "articleImageMain", "articleTitle", "articleContent", "articleLink");
+                BIZ_ArticlesMain biz_articles = new BIZ_ArticlesMain();
+                dto.articles = biz_articles.GetArticles(helper);
 
                 ViewBag.title = "Kodegorillaens Cases";
                 ViewBag.page = "casesmain";
                 ViewBag.bodytext = helper.GetValue(current, "articlesTitle");
 
+                BIZ_Master biz = new BIZ_Master();
                 DTO_Master master = new DTO_Master(CurrentPage);
-                master.ToDTO(ViewData, helper);
+                master = biz.ToDTO(ViewData, helper);
                 ViewBag.master = master;
 
                 return CurrentTemplate(dto);
@@ -71,8 +74,9 @@ namespace kongcore.dk.Core.Controllers
                 ViewBag.page = "submitfail";
                 ViewBag.bodytext = "Ups";
 
+                BIZ_Master biz = new BIZ_Master();
                 DTO_Master master = new DTO_Master(CurrentPage);
-                master.ToDTO(ViewData, helper);
+                master = biz.ToDTO(ViewData, helper);
                 ViewBag.master = master;
 
 
