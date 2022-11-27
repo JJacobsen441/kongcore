@@ -32,22 +32,8 @@ namespace kongcore.dk.Core.Controllers
                 IPublishedContent root = helper._Root();
                 IPublishedContent current = helper._CurrentRoot();
 
-                DTO_Procedure dto = new DTO_Procedure(CurrentPage);
-
-                dto.procedureHeader = helper.GetValue(current, "procedureHeader");
-                dto.procedureBodyText = helper.GetValue(current, "procedureBodyText").RichStrip();
-                dto.procedureMail = helper.GetValue(current, "procedureMail").FormatEmailSimple();
-                dto.procedureText = helper.GetValue(current, "procedureText");
-
-                IPublishedContent block1Node = helper.NodeType(root, "block1");
-                dto.block1header = helper.GetPropertyValue(block1Node, "block1Header");
-                dto.block1text = helper.GetPropertyValue(block1Node, "block1Text").FormatParagraph();
-                dto.block1buttontext = helper.GetPropertyValue(block1Node, "block1ButtonText");
-
-                IPublishedContent block3Node = helper.NodeType(root, "block2");
-                dto.block2header = helper.GetPropertyValue(block3Node, "block2Header");
-                dto.block2text = helper.GetPropertyValue(block3Node, "block2Text").FormatParagraph();
-                dto.block2buttontext = helper.GetPropertyValue(block3Node, "block2ButtonText");
+                BIZ_Procedure biz_procedure = new BIZ_Procedure();
+                DTO_Procedure dto = biz_procedure.ToDTO(helper);
 
                 ViewBag.title = "Sådan Gør Vi";
                 ViewBag.page = "procedure";
@@ -66,16 +52,6 @@ namespace kongcore.dk.Core.Controllers
 
                 if (helper.IsNull())
                     helper = new ContentHelper(Umbraco, CurrentPage);
-
-                ViewBag.title = "Fail";
-                ViewBag.page = "submitfail";
-                ViewBag.bodytext = "Ups";
-
-                BIZ_Master biz = new BIZ_Master();
-                DTO_Master master = new DTO_Master(CurrentPage);
-                master = biz.ToDTO(ViewData, helper);
-                ViewBag.master = master;
-
 
                 var fail = helper.NodeName(helper._Root(), "Fail"); ;
                 int failPageId = fail.Id;

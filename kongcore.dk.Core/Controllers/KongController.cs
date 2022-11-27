@@ -56,14 +56,6 @@ namespace kongcore.dk.Core.Controllers
                 if (helper.IsNull())
                     helper = new ContentHelper(Umbraco, CurrentPage);
 
-                ViewBag.title = "Fail";
-                ViewBag.page = "submitfail";
-                ViewBag.bodytext = "Ups";
-
-                BIZ_Master biz = new BIZ_Master();
-                DTO_Master master = new DTO_Master(CurrentPage);
-                master = biz.ToDTO(ViewData, helper);
-                ViewBag.master = master;
 
                 Response.Redirect("/fail"); 
                 return;
@@ -89,26 +81,8 @@ namespace kongcore.dk.Core.Controllers
                 IPublishedContent root = helper._Root();
                 IPublishedContent current = helper._CurrentRoot();
 
-                DTO_BlogMain dto = new DTO_BlogMain(CurrentPage);
-                
-                dto.blogTitle = helper.GetValue(current, "blogTitle");
-                dto.blogBodyText = helper.GetValue(current, "blogBodyText").FormatParagraph();
-
-                IPublishedContent block1Node = helper.NodeType(root, "block1");
-                dto.block1header = helper.GetPropertyValue(block1Node, "block1Header");
-                dto.block1text = helper.GetPropertyValue(block1Node, "block1Text").FormatParagraph();
-                dto.block1buttontext = helper.GetPropertyValue(block1Node, "block1ButtonText");
-
-                IPublishedContent block2Node = helper.NodeType(root, "block2");
-                dto.block2header = helper.GetPropertyValue(block2Node, "block2Header");
-                dto.block2text = helper.GetPropertyValue(block2Node, "block2Text").FormatParagraph();
-                dto.block2buttontext = helper.GetPropertyValue(block2Node, "block2ButtonText");
-
                 BIZ_BlogMain biz_blog = new BIZ_BlogMain();
-                dto.blogs = biz_blog.GetBlogs(helper, model);
-
-
-
+                DTO_BlogMain dto = biz_blog.ToDTO(helper, model);
 
                 ViewBag.title = "Kodegorillaen Blogger";
                 ViewBag.page = "blogmain";
@@ -127,16 +101,6 @@ namespace kongcore.dk.Core.Controllers
 
                 if (helper.IsNull())
                     helper = new ContentHelper(Umbraco, CurrentPage);
-
-                ViewBag.title = "Fail";
-                ViewBag.page = "submitfail";
-                ViewBag.bodytext = "Ups";
-
-                BIZ_Master biz = new BIZ_Master();
-                DTO_Master master = new DTO_Master(CurrentPage);
-                master = biz.ToDTO(ViewData, helper);
-                ViewBag.master = master;
-
 
                 var fail = helper.NodeName(helper._Root(), "Fail"); ;
                 int failPageId = fail.Id;

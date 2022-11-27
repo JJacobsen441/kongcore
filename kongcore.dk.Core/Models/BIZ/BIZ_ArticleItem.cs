@@ -23,5 +23,39 @@ namespace kongcore.dk.Core.Models.BIZ
 
             return _i;
         }
+
+        public DTO_ArticleItem ToDTO(ContentHelper helper) 
+        {
+            IPublishedContent root = helper._Root();
+            IPublishedContent current = helper._CurrentRoot();
+
+            DTO_ArticleItem dto = new DTO_ArticleItem(helper._CurrentRoot());
+
+            dto.articleTitle = helper.GetValue(current, "articleTitle");
+            dto.articleLink = helper.GetValue(current, "articleLink");
+            dto.articleContent = helper.GetValue(current, "articleContent").FormatParagraph();
+
+            dto.articleAboutHeader = helper.GetValue(current, "articleAboutHeader");
+            dto.articleAboutText = helper.GetValue(current, "articleAboutText").FormatParagraph();
+            dto.articleTaskHeader = helper.GetValue(current, "articleTaskHeader");
+            dto.articleTaskText = helper.GetValue(current, "articleTaskText").FormatParagraph();
+
+            IPublishedContent block1Node = helper.NodeType(root, "block1");
+            dto.block1header = helper.GetPropertyValue(block1Node, "block1Header");
+            dto.block1text = helper.GetPropertyValue(block1Node, "block1Text").FormatParagraph();
+            dto.block1buttontext = helper.GetPropertyValue(block1Node, "block1ButtonText");
+
+            IPublishedContent block2Node = helper.NodeType(root, "block2");
+            dto.block2header = helper.GetPropertyValue(block2Node, "block2Header");
+            dto.block2text = helper.GetPropertyValue(block2Node, "block2Text").FormatParagraph();
+            dto.block2buttontext = helper.GetPropertyValue(block2Node, "block2ButtonText");
+                        
+            dto.img = GetImage(helper, "articleImageMain", "articleTitle");
+            dto.img1 = GetImage(helper, "articleImageMob1", "articleTitle");
+            dto.img2 = GetImage(helper, "articleImageMob2", "articleTitle");
+            dto.img3 = GetImage(helper, "articleImageMob3", "articleTitle");
+
+            return dto;
+        }
     }
 }

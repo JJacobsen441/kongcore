@@ -13,22 +13,23 @@ namespace kongcore.dk.Core.Models.BIZ
     {
         public List<Blog> GetBlogs(ContentHelper helper, SearchViewModel model)
         {
+            IPublishedContent root = helper._Root();
+            IPublishedContent current = helper._CurrentRoot();
+
             List<IPublishedContent> blogs = new List<IPublishedContent>();
 
             if(model.IsNull())
             {
-                blogs = helper.NodesType(helper._CurrentRoot(), "blogItem").OrderByDescending(x => x.CreateDate).ToList();
-                //list = helper._GetItems(blogs.ToList(), "imagePicker", "blogItemTitle", "blogItemContent", null);
+                blogs = helper.NodesType(current, "blogItem").OrderByDescending(x => x.CreateDate).ToList();
             }
             else
             {
-                var blog_main = helper.NodeType(helper._Root(), "blogMain");
-                var blog_items = blog_main.Children.Where(x => x.ContentType.Alias == "blogItem");
+                var blog_items = helper.NodesType(current, "blogItem");
                 blogs = model.search_string.IsNullOrEmpty() ? 
                     blog_items.ToList() :
                     blog_items.Where(x =>
-                    ((string)x.GetProperty("BlogItemTitle").GetValue().ToString().ToLower()).Contains(model.search_string) ||
-                    ((string)x.GetProperty("BlogItemContent").GetValue().ToString().ToLower()).Contains(model.search_string)
+                    helper.GetPropertyValue(x, "BlogItemTitle").ToLower().Contains(model.search_string) ||
+                    helper.GetPropertyValue(x, "BlogItemContent").ToLower().Contains(model.search_string)
                 ).ToList();
             }
 
@@ -55,6 +56,31 @@ namespace kongcore.dk.Core.Models.BIZ
             }
 
             return items;
+        }
+
+        public DTO_BlogMain ToDTO(ContentHelper helper, SearchViewModel model) 
+        {
+            IPublishedContent root = helper._Root();
+            IPublishedContent current = helper._CurrentRoot();
+
+            DTO_BlogMain dto = new DTO_BlogMain(current);
+
+            dto.blogTitle = helper.GetValue(current, "blogTitle");
+            dto.blogBodyText = helper.GetValue(current, "blogBodyText").FormatParagraph();
+
+            IPublishedContent block1Node = helper.NodeType(root, "block1");
+            dto.block1header = helper.GetPropertyValue(block1Node, "block1Header");
+            dto.block1text = helper.GetPropertyValue(block1Node, "block1Text").FormatParagraph();
+            dto.block1buttontext = helper.GetPropertyValue(block1Node, "block1ButtonText");
+
+            IPublishedContent block2Node = helper.NodeType(root, "block2");
+            dto.block2header = helper.GetPropertyValue(block2Node, "block2Header");
+            dto.block2text = helper.GetPropertyValue(block2Node, "block2Text").FormatParagraph();
+            dto.block2buttontext = helper.GetPropertyValue(block2Node, "block2ButtonText");
+
+            dto.blogs = GetBlogs(helper, model);
+
+            return dto;
         }
     }
 }

@@ -37,6 +37,46 @@ namespace kongcore.dk.Core.Models.BIZ
 
             return items;
         }
+
+        public DTO_HomePage ToDTO(ContentHelper helper)
+        {
+            IPublishedContent root = helper._Root();
+            IPublishedContent current = helper._CurrentRoot();
+
+            DTO_HomePage dto = new DTO_HomePage(current);
+            dto.aboutTitle = helper.GetValue(current, "aboutTitle");
+            dto.aboutText = helper.GetValue(current, "aboutText").FormatParagraph();
+
+            dto.conclusionTitle = helper.GetValue(current, "conclusionTitle");
+            dto.conclusionText = helper.GetValue(current, "conclusionText").FormatParagraph();
+
+            dto.bodyText1Header = helper.GetValue(current, "bodyText1Header");
+            dto.bodyText1 = helper.GetValue(current, "bodyText1").FormatParagraph();
+            dto.bodyText2Header = helper.GetValue(current, "bodyText2Header");
+            dto.bodyText2 = helper.GetValue(current, "bodyText2").FormatParagraph();
+            dto.bodyText3Header = helper.GetValue(current, "bodyText3Header");
+            dto.bodyText3 = helper.GetValue(current, "bodyText3").FormatParagraph();
+            dto.bodyText4Header = helper.GetValue(current, "bodyText4Header");
+            dto.bodyText4 = helper.GetValue(current, "bodyText4").FormatParagraph();
+
+            dto.quote1 = helper.GetValue(current, "quote1");
+            dto.quote2 = helper.GetValue(current, "quote2");
+            dto.quote3 = helper.GetValue(current, "quote3");
+
+            IPublishedContent block1Node = helper.NodeType(root, "block1");
+            dto.block1header = helper.GetPropertyValue(block1Node, "block1Header");
+            dto.block1text = helper.GetPropertyValue(block1Node, "block1Text").FormatParagraph();
+            dto.block1buttontext = helper.GetPropertyValue(block1Node, "block1ButtonText");
+
+            IPublishedContent block3Node = helper.NodeType(root, "block3");
+            dto.block3header = helper.GetPropertyValue(block3Node, "block3Header");
+            dto.block3text = helper.GetPropertyValue(block3Node, "block3Text").FormatParagraph();
+            dto.block3buttontext = helper.GetPropertyValue(block3Node, "block3ButtonText");
+
+            dto.sites = GetSites(helper);
+
+            return dto;
+        }
     }
 }
 

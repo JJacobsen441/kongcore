@@ -32,13 +32,8 @@ namespace kongcore.dk.Core.Controllers
                 IPublishedContent root = helper._Root();
                 IPublishedContent current = helper._CurrentRoot();
 
-                DTO_SimpleContentPage dto = new DTO_SimpleContentPage(CurrentPage);
-
-                dto.bodyHeader = helper.GetValue(current, "bodyHeader");
-                dto.bodyText = helper.GetValue(current, "bodyText").RichStrip();
-
-                dto.contactEmployee1 = helper.GetValue(current, "contactEmployee1").FormatEmailAdvanced();
-                dto.contactEmployee2 = helper.GetValue(current, "contactEmployee2").FormatEmailAdvanced();
+                BIZ_SimpleContentPage biz_simple = new BIZ_SimpleContentPage();
+                DTO_SimpleContentPage dto = biz_simple.ToDTO(helper);
 
                 ViewBag.title = "Kontakt En Kodegorilla";
                 ViewBag.page = "contact";
@@ -59,16 +54,6 @@ namespace kongcore.dk.Core.Controllers
 
                 if (helper.IsNull())
                     helper = new ContentHelper(Umbraco, CurrentPage);
-
-                ViewBag.title = "Fail";
-                ViewBag.page = "submitfail";
-                ViewBag.bodytext = "Ups";
-
-                BIZ_Master biz = new BIZ_Master();
-                DTO_Master master = new DTO_Master(CurrentPage);
-                master = biz.ToDTO(ViewData, helper);
-                ViewBag.master = master;
-
 
                 var fail = helper.NodeName(helper._Root(), "Fail"); ;
                 int failPageId = fail.Id;

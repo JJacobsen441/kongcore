@@ -32,32 +32,8 @@ namespace kongcore.dk.Core.Controllers
                 IPublishedContent root = helper._Root();
                 IPublishedContent current = helper._CurrentRoot();
 
-                DTO_ArticleItem dto = new DTO_ArticleItem(CurrentPage);
-
-                dto.articleTitle = helper.GetValue(current, "articleTitle");
-                dto.articleLink = helper.GetValue(current, "articleLink");
-                dto.articleContent = helper.GetValue(current, "articleContent").FormatParagraph();
-
-                dto.articleAboutHeader = helper.GetValue(current, "articleAboutHeader");
-                dto.articleAboutText = helper.GetValue(current, "articleAboutText").FormatParagraph();
-                dto.articleTaskHeader = helper.GetValue(current, "articleTaskHeader");
-                dto.articleTaskText = helper.GetValue(current, "articleTaskText").FormatParagraph();
-
-                IPublishedContent block1Node = helper.NodeType(root, "block1");
-                dto.block1header = helper.GetPropertyValue(block1Node, "block1Header");
-                dto.block1text = helper.GetPropertyValue(block1Node, "block1Text").FormatParagraph();
-                dto.block1buttontext = helper.GetPropertyValue(block1Node, "block1ButtonText");
-
-                IPublishedContent block2Node = helper.NodeType(root, "block2");
-                dto.block2header = helper.GetPropertyValue(block2Node, "block2Header");
-                dto.block2text = helper.GetPropertyValue(block2Node, "block2Text").FormatParagraph();
-                dto.block2buttontext = helper.GetPropertyValue(block2Node, "block2ButtonText");
-
                 BIZ_ArticleItem biz_article = new BIZ_ArticleItem();
-                dto.img = biz_article.GetImage(helper, "articleImageMain", "articleTitle");
-                dto.img1 = biz_article.GetImage(helper, "articleImageMob1", "articleTitle");
-                dto.img2 = biz_article.GetImage(helper, "articleImageMob2", "articleTitle");
-                dto.img3 = biz_article.GetImage(helper, "articleImageMob3", "articleTitle");
+                DTO_ArticleItem dto = biz_article.ToDTO(helper);
 
                 ViewBag.title = "KongCore Case";
                 ViewBag.page = "case";
@@ -76,16 +52,6 @@ namespace kongcore.dk.Core.Controllers
 
                 if (helper.IsNull())
                     helper = new ContentHelper(Umbraco, CurrentPage);
-
-                ViewBag.title = "Fail";
-                ViewBag.page = "submitfail";
-                ViewBag.bodytext = "Ups";
-
-                BIZ_Master biz = new BIZ_Master();
-                DTO_Master master = new DTO_Master(CurrentPage);
-                master = biz.ToDTO(ViewData, helper);
-                ViewBag.master = master;
-
 
                 var fail = helper.NodeName(helper._Root(), "Fail"); ;
                 int failPageId = fail.Id;
