@@ -46,8 +46,9 @@ namespace kongcore.dk.Core.Models.BIZ
                 string title = helper.GetValue(item, "blogItemTitle");
                 string content = helper.GetValue(item, "blogItemContent").RichStrip();
 
-                string url = item.Url();
+                //string url = item.Url();
                 string alt = item.Name;
+                //string media_url = mediaItem?.GetCropUrl("Thumb");
                 string media_url = mediaItem?.Url();
                 string create_date = "" + item.CreateDate.ToString("dd/MM-yyyy");
 

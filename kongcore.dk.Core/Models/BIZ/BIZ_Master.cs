@@ -23,17 +23,17 @@ namespace kongcore.dk.Core.Models.BIZ
                 "color-gray-1" :
                 "color-orange";
             dto.css_menu = (string)view["page"] == "blogmain" ?
-                "bold color-black" :
+                "bold color-black text-shadow-black " :
                 (string)view["page"] == "skillsmain" ?
                 "color-black" :
                 "color-white";
             dto.css_brand = (string)view["page"] == "blogmain" ?
-                "color-white" :
+                "color-white text-shadow-black " :
                 (string)view["page"] == "skillsmain" ?
                 "color-black" :
                 "color-orange";
             dto.css_brand_sub_bg = (string)view["page"] == "blogmain" ?
-                "padding-all background-color-gray" :
+                "padding-all background-color-gray box-shadow-black " :
                 (string)view["page"] == "skillsmain" ?
                 "padding-all background-color-gray" :
                 "";
