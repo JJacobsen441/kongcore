@@ -37,8 +37,13 @@ namespace kongcore.dk.Core.Controllers
                 IPublishedContent current = helper._CurrentRoot();
 
                 DTO_HomePage dto = new DTO_HomePage(CurrentPage);
-                               
 
+                string error = null;
+                if(TempData["MSG"]!=null)
+                    error = "" + TempData["MSG"];
+                error = error.Replace("at ", "<br />at ");
+
+                ViewBag.MSG = error;
                 ViewBag.title = "Mere End Bare Kodeaber";
                 ViewBag.page = "fail";
                 ViewBag.bodytext = helper.GetValue(current, "bodyText");

@@ -56,6 +56,7 @@ namespace kongcore.dk.Core.Controllers
                 if (helper.IsNull())
                     helper = new ContentHelper(Umbraco, CurrentPage);
 
+                TempData["MSG"] = _e.Message + " : " + _e.StackTrace;
 
                 Response.Redirect("/fail"); 
                 return;
