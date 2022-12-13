@@ -40,5 +40,8 @@ namespace kongcore.dk.Core.Models.DTOs
         public string footerText { get; set; }
         public string year { get; set; }
         public string footerText2 { get; set; }
+
+        public string title { get; set; }
+        public string description { get; set; }
     }
 }

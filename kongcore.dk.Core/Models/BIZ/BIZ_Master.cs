@@ -6,7 +6,7 @@ using Umbraco.Core.Models.PublishedContent;
 
 namespace kongcore.dk.Core.Models.BIZ
 {
-    class BIZ_Master
+    public class BIZ_Master
     {
         public DTO_Master ToDTO(ViewDataDictionary view, ContentHelper helper)
         {
@@ -54,6 +54,7 @@ namespace kongcore.dk.Core.Models.BIZ
             //var selection = root.Nodes(site);
             var campNode = helper.NodeType(root, "campaignMain");
             var settingsNode = helper.NodeType(root, "settings");
+            var masterNode = helper.NodeType(root, "master");
 
             if (campNode.IsNull())
                 throw new Exception();
@@ -76,6 +77,9 @@ namespace kongcore.dk.Core.Models.BIZ
             dto.footerText = helper.GetValueFallback(root, "footerText").RichStrip();
             dto.year = DateTime.Now.Year.ToString();
             dto.footerText2 = helper.GetValueFallback(root, "footerText2");
+
+            dto.title = helper.GetPropertyValue(masterNode, "title");
+            dto.description = helper.GetPropertyValue(masterNode, "description");
 
             return dto;
         }

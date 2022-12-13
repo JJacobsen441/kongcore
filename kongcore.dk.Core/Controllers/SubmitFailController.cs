@@ -2,11 +2,8 @@
 using kongcore.dk.Core.Models.BIZ;
 using kongcore.dk.Core.Models.DTOs;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
 using Umbraco.Core.Models.PublishedContent;
-using Umbraco.Web;
 using Umbraco.Web.Models;
 
 /// <summary>
@@ -40,11 +37,13 @@ namespace kongcore.dk.Core.Controllers
 
                 string error = null;
                 if(TempData["MSG"]!=null)
+                {
                     error = "" + TempData["MSG"];
-                error = error.Replace("at ", "<br />at ");
+                    error = error.Replace("at ", "<br />at ");
+                }
 
                 ViewBag.MSG = error;
-                ViewBag.title = "Mere End Bare Kodeaber";
+                //ViewBag.title = "Mere End Bare Kodeaber";
                 ViewBag.page = "fail";
                 ViewBag.bodytext = helper.GetValue(current, "bodyText");
 

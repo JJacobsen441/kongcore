@@ -38,7 +38,7 @@ namespace kongcore.dk.Core.Controllers
                 BIZ_HomePage biz_home = new BIZ_HomePage();
                 DTO_HomePage dto = biz_home.ToDTO(helper);
 
-                ViewBag.title = "Mere End Bare Kodeaber";
+                //ViewBag.title = "Mere End Bare Kodeaber";
                 ViewBag.page = "homepage";
                 ViewBag.bodytext = helper.GetValue(current, "bodyText");
 
