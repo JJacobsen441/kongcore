@@ -33,9 +33,9 @@ namespace kongcore.dk.Core.Models.BIZ
                 "color-black text-shadow-black" :
                 "color-orange text-shadow-black";
             dto.css_brand_sub_bg = (string)view["page"] == "blogmain" ?
-                "padding-all background-color-gray box-shadow-black " :
+                "padding-all-15 background-color-gray box-shadow-black " :
                 (string)view["page"] == "skillsmain" ?
-                "padding-all background-color-gray box-shadow-black" :
+                "padding-all-15 background-color-gray box-shadow-black" :
                 "";
             dto.css_brand_sub_col = (string)view["page"] == "blogmain" ?
                 "color-white" :
