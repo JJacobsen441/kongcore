@@ -39,7 +39,7 @@ namespace kongcore.dk.Core.Controllers
 
                 ViewBag.title = "Mere End Bare Kodeaber";
                 ViewBag.page = "success";
-                ViewBag.bodytext = helper.GetValue(current, "bodyText");
+                ViewBag.bodytext = "Yay!";// helper.GetValue(current, "bodyText");
 
                 BIZ_Master biz = new BIZ_Master();
                 DTO_Master master = new DTO_Master(CurrentPage);

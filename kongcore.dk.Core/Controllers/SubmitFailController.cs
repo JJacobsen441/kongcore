@@ -45,7 +45,7 @@ namespace kongcore.dk.Core.Controllers
                 ViewBag.MSG = error;
                 //ViewBag.title = "Mere End Bare Kodeaber";
                 ViewBag.page = "fail";
-                ViewBag.bodytext = helper.GetValue(current, "bodyText");
+                ViewBag.bodytext = "Ups";// helper.GetValue(current, "bodyText");
 
                 BIZ_Master biz = new BIZ_Master();
                 DTO_Master master = new DTO_Master(CurrentPage);

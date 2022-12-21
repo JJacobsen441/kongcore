@@ -43,10 +43,10 @@ namespace kongcore.dk.Core.Models.BIZ
                 "color-white" :
                 "color-orange text-shadow-black";
             dto.css_font = (string)view["page"] == "blogmain" ?
-                "caviardreams" :
+                "font-one" :
                 (string)view["page"] == "skillsmain" ?
-                "caviardreams" :
-                "caviardreams";
+                "font-one" :
+                "font-one";
 
             IPublishedContent root = helper._Root();
             IPublishedContent current = helper._CurrentRoot();
