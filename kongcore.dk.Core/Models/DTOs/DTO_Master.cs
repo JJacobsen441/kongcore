@@ -22,14 +22,11 @@ namespace kongcore.dk.Core.Models.DTOs
 
         public IPublishedContent _content { get; set; }
 
-        public string css_line2 { get; set; }
-        public string css_camp { get; set; }
-        public string css_menu { get; set; }
-        public string css_brand { get; set; }
-        public string css_brand_sub_bg { get; set; }
-        public string css_brand_sub_col { get; set; }
-        public string css_font { get; set; }
-        public string campaign { get; set; }
+        public string alt { get; set; }
+        public string camp { get; set; }
+        public string camp_link { get; set; }
+        public string camp_text { get; set; }
+        
         public string sitename { get; set; }
         public string slogan1 { get; set; }
         public string slogan2 { get; set; }

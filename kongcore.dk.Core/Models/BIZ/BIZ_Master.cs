@@ -12,42 +12,22 @@ namespace kongcore.dk.Core.Models.BIZ
         {
             DTO_Master dto = new DTO_Master(helper._Root());
 
-            dto.css_line2 = (string)view["page"] == "blogmain" ?
-                "alt1" :
-                (string)view["page"] == "skillsmain" ?
-                "alt2" :
-                "alt3";
-            dto.css_camp = (string)view["page"] == "blogmain" ?
-                "color-gray-1" :
-                (string)view["page"] == "skillsmain" ?
-                "color-gray-1" :
-                "color-orange";
-            dto.css_menu = (string)view["page"] == "blogmain" ?
-                "bold color-black text-shadow-black " :
-                (string)view["page"] == "skillsmain" ?
-                "color-black text-shadow-black" :
-                "color-white text-shadow-black";
-            dto.css_brand = (string)view["page"] == "blogmain" ?
-                "color-white text-shadow-black " :
-                (string)view["page"] == "skillsmain" ?
-                "color-black text-shadow-black" :
-                "color-orange text-shadow-black";
-            dto.css_brand_sub_bg = (string)view["page"] == "blogmain" ?
-                "padding-all-15 background-color-gray box-shadow-black " :
-                (string)view["page"] == "skillsmain" ?
-                "padding-all-15 background-color-gray box-shadow-black" :
-                "";
-            dto.css_brand_sub_col = (string)view["page"] == "blogmain" ?
-                "color-white" :
-                (string)view["page"] == "skillsmain" ?
-                "color-white" :
-                "color-orange text-shadow-black";
-            dto.css_font = (string)view["page"] == "blogmain" ?
-                "font-one" :
-                (string)view["page"] == "skillsmain" ?
-                "font-one" :
-                "font-one";
-
+            switch ((string)view["page"])
+            {
+                case "skillsmain":
+                    dto.alt = "alt2";
+                    break;
+                case "casesmain":
+                    dto.alt = "alt1";
+                    break;
+                case "blogmain":
+                    dto.alt = "alt3";
+                    break;
+                default:
+                    dto.alt = "alt1";
+                    break;
+            }
+                        
             IPublishedContent root = helper._Root();
             IPublishedContent current = helper._CurrentRoot();
 
@@ -63,8 +43,10 @@ namespace kongcore.dk.Core.Models.BIZ
 
             string camp = helper.GetPropertyValue(campNode, "campaignText");
             string link = helper.GetPropertyValue(campNode, "campaignLink");
-            string link_text = helper.GetPropertyValue(campNode, "campaignLinkText");
-            dto.campaign = "<span class=\"bold\">" + camp + "</span>" + (string.IsNullOrEmpty("" + link) ? "" : "&nbsp;<a class=\"display-inline bold " + dto.css_camp + "\" href=\"" + link + "\">" + link_text.Replace(" ", "&nbsp;") + "</a>");
+            string text = helper.GetPropertyValue(campNode, "campaignLinkText");
+            dto.camp = camp;
+            dto.camp_link = link;
+            dto.camp_text = text.Replace(" ", "&nbsp;");
 
             dto.sitename = helper.GetPropertyValue(settingsNode, "siteName");
             dto.slogan1 = helper.GetPropertyValue(settingsNode, "siteSlogan");
