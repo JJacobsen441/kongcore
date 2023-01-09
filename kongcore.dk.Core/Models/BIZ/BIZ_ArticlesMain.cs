@@ -14,7 +14,7 @@ namespace kongcore.dk.Core.Models.BIZ
         {
             List<IPublishedContent> articles = new List<IPublishedContent>();
 
-            articles = helper.NodesType(helper._CurrentRoot(), "articlesItem").OrderByDescending(x => x.CreateDate).ToList();
+            articles = helper.NodesType(helper.RootCurrent(), "articlesItem").OrderByDescending(x => x.CreateDate).ToList();
             //dto.articles = helper.GetItems(articles.ToList(), "articleImageMain", "articleTitle", "articleContent", "articleLink");
 
             if (articles.IsNull())
@@ -43,8 +43,8 @@ namespace kongcore.dk.Core.Models.BIZ
 
         public DTO_ArticlesMain ToDTO(ContentHelper helper)
         {
-            IPublishedContent root = helper._Root();
-            IPublishedContent current = helper._CurrentRoot();
+            IPublishedContent root = helper.Root();
+            IPublishedContent current = helper.RootCurrent();
 
             DTO_ArticlesMain dto = new DTO_ArticlesMain(current);
 
@@ -63,6 +63,11 @@ namespace kongcore.dk.Core.Models.BIZ
 
             BIZ_ArticlesMain biz_articles = new BIZ_ArticlesMain();
             dto.articles = biz_articles.GetArticles(helper);
+
+            List<string> quotes = GeneralHelper.GetQuotes(helper, true);
+            dto.quote1 = quotes[0];
+            dto.quote2 = quotes[1];
+            dto.quote3 = quotes[2];
 
             return dto;
         }

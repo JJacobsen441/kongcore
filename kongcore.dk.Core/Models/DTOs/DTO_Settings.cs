@@ -7,9 +7,9 @@ using Umbraco.Web;
 
 namespace kongcore.dk.Core.Models.DTOs
 {
-    public class DTO_Master : Umbraco.Web.PublishedModels.HomePage
+    public class DTO_Settings : Umbraco.Web.PublishedModels.HomePage
     {
-        public DTO_Master(IPublishedContent _c) : base(_c)
+        public DTO_Settings(IPublishedContent _c) : base(_c)
         {
             this._content = _c;
         }

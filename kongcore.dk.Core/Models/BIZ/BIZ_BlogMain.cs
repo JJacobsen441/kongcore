@@ -13,8 +13,8 @@ namespace kongcore.dk.Core.Models.BIZ
     {
         public List<Blog> GetBlogs(ContentHelper helper, SearchViewModel model)
         {
-            IPublishedContent root = helper._Root();
-            IPublishedContent current = helper._CurrentRoot();
+            IPublishedContent root = helper.Root();
+            IPublishedContent current = helper.RootCurrent();
 
             List<IPublishedContent> blogs = new List<IPublishedContent>();
 
@@ -58,11 +58,11 @@ namespace kongcore.dk.Core.Models.BIZ
 
             return items;
         }
-
+        
         public DTO_BlogMain ToDTO(ContentHelper helper, SearchViewModel model) 
         {
-            IPublishedContent root = helper._Root();
-            IPublishedContent current = helper._CurrentRoot();
+            IPublishedContent root = helper.Root();
+            IPublishedContent current = helper.RootCurrent();
 
             DTO_BlogMain dto = new DTO_BlogMain(current);
 
@@ -80,6 +80,11 @@ namespace kongcore.dk.Core.Models.BIZ
             dto.block2buttontext = helper.GetPropertyValue(block2Node, "block2ButtonText");
 
             dto.blogs = GetBlogs(helper, model);
+
+            List<string> quotes = GeneralHelper.GetQuotes(helper, true);
+            dto.quote1 = quotes[0];
+            dto.quote2 = quotes[1];
+            dto.quote3 = quotes[2];
 
             return dto;
         }

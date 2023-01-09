@@ -30,8 +30,8 @@ namespace kongcore.dk.Core.Controllers
                 //throw new Exception();
                 
                 helper = new ContentHelper(Umbraco, CurrentPage);
-                IPublishedContent root = helper._Root();
-                IPublishedContent current = helper._CurrentRoot();
+                IPublishedContent root = helper.Root();
+                IPublishedContent current = helper.RootCurrent();
 
                 DTO_HomePage dto = new DTO_HomePage(CurrentPage);
 
@@ -47,8 +47,8 @@ namespace kongcore.dk.Core.Controllers
                 ViewBag.page = "fail";
                 ViewBag.bodytext = "Ups";// helper.GetValue(current, "bodyText");
 
-                BIZ_Master biz = new BIZ_Master();
-                DTO_Master master = new DTO_Master(CurrentPage);
+                BIZ_Settings biz = new BIZ_Settings();
+                DTO_Settings master = new DTO_Settings(CurrentPage);
                 master = biz.ToDTO(ViewData, helper);
                 ViewBag.master = master;
 

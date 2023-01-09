@@ -29,12 +29,12 @@ namespace kongcore.dk.Core.Common
             current = _c;
         }
 
-        public IPublishedContent _Root()
+        public IPublishedContent Root()
         {
-            return helper.ContentAtRoot().First(); ;
+            return helper.ContentAtRoot().First();
         }
 
-        public IPublishedContent _CurrentRoot()
+        public IPublishedContent RootCurrent()
         {
             return current;
         }

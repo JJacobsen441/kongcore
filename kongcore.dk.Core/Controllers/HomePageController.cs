@@ -2,8 +2,6 @@
 using kongcore.dk.Core.Models.BIZ;
 using kongcore.dk.Core.Models.DTOs;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
 using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Web;
@@ -32,8 +30,8 @@ namespace kongcore.dk.Core.Controllers
                 //throw new Exception();
 
                 helper = new ContentHelper(Umbraco, CurrentPage);
-                IPublishedContent root = helper._Root();
-                IPublishedContent current = helper._CurrentRoot();
+                IPublishedContent root = helper.Root();
+                IPublishedContent current = helper.RootCurrent();
 
                 BIZ_HomePage biz_home = new BIZ_HomePage();
                 DTO_HomePage dto = biz_home.ToDTO(helper);
@@ -42,8 +40,8 @@ namespace kongcore.dk.Core.Controllers
                 ViewBag.page = "homepage";
                 ViewBag.bodytext = helper.GetValue(current, "bodyText");
 
-                BIZ_Master biz = new BIZ_Master();
-                DTO_Master master = new DTO_Master(CurrentPage);
+                BIZ_Settings biz = new BIZ_Settings();
+                DTO_Settings master = new DTO_Settings(CurrentPage);
                 master = biz.ToDTO(ViewData, helper);
                 ViewBag.master = master;
 
@@ -56,7 +54,9 @@ namespace kongcore.dk.Core.Controllers
                 if (helper.IsNull())
                     helper = new ContentHelper(Umbraco, CurrentPage);
 
-                var fail = helper.NodeName(helper._Root(), "Fail");;
+                TempData["MSG"] = _e.Message + " : " + _e.StackTrace;
+
+                var fail = helper.NodeName(helper.Root(), "Fail");;
                 int failPageId = fail.Id;
 
                 var redirectPage = Umbraco.Content(failPageId); //page id here

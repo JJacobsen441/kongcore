@@ -45,6 +45,34 @@ namespace Umbraco.Web.PublishedModels
 		// properties
 
 		///<summary>
+		/// Campaign Link
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.12.3")]
+		[ImplementPropertyType("campaignLink")]
+		public string CampaignLink => this.Value<string>("campaignLink");
+
+		///<summary>
+		/// Campaign Link Text
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.12.3")]
+		[ImplementPropertyType("campaignLinkText")]
+		public string CampaignLinkText => this.Value<string>("campaignLinkText");
+
+		///<summary>
+		/// Campaign Text
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.12.3")]
+		[ImplementPropertyType("campaignText")]
+		public string CampaignText => this.Value<string>("campaignText");
+
+		///<summary>
+		/// Description
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.12.3")]
+		[ImplementPropertyType("description")]
+		public string Description => this.Value<string>("description");
+
+		///<summary>
 		/// Site Name
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.12.3")]
@@ -64,5 +92,12 @@ namespace Umbraco.Web.PublishedModels
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.12.3")]
 		[ImplementPropertyType("siteSlogan2")]
 		public string SiteSlogan2 => this.Value<string>("siteSlogan2");
+
+		///<summary>
+		/// Title
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.12.3")]
+		[ImplementPropertyType("title")]
+		public string Title => this.Value<string>("title");
 	}
 }

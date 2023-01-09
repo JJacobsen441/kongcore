@@ -122,6 +122,20 @@ namespace Umbraco.Web.PublishedModels
 		public string BodyText4Header => this.Value<string>("bodyText4Header");
 
 		///<summary>
+		/// Body Text 5
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.12.3")]
+		[ImplementPropertyType("bodyText5")]
+		public string BodyText5 => this.Value<string>("bodyText5");
+
+		///<summary>
+		/// Body Text 5 Header
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.12.3")]
+		[ImplementPropertyType("bodyText5Header")]
+		public string BodyText5Header => this.Value<string>("bodyText5Header");
+
+		///<summary>
 		/// Conclusion Text
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.12.3")]

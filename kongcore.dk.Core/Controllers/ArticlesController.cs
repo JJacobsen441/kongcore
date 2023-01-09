@@ -29,8 +29,8 @@ namespace kongcore.dk.Core.Controllers
                 // Create AMP specific content here...
 
                 helper = new ContentHelper(Umbraco, CurrentPage);
-                IPublishedContent root = helper._Root();
-                IPublishedContent current = helper._CurrentRoot();
+                IPublishedContent root = helper.Root();
+                IPublishedContent current = helper.RootCurrent();
 
                 BIZ_ArticlesMain biz_articles = new BIZ_ArticlesMain();
                 DTO_ArticlesMain dto = biz_articles.ToDTO(helper);
@@ -39,8 +39,8 @@ namespace kongcore.dk.Core.Controllers
                 ViewBag.page = "casesmain";
                 ViewBag.bodytext = helper.GetValue(current, "articlesTitle");
 
-                BIZ_Master biz = new BIZ_Master();
-                DTO_Master master = new DTO_Master(CurrentPage);
+                BIZ_Settings biz = new BIZ_Settings();
+                DTO_Settings master = new DTO_Settings(CurrentPage);
                 master = biz.ToDTO(ViewData, helper);
                 ViewBag.master = master;
 
@@ -53,7 +53,7 @@ namespace kongcore.dk.Core.Controllers
                 if (helper.IsNull())
                     helper = new ContentHelper(Umbraco, CurrentPage);
 
-                var fail = helper.NodeName(helper._Root(), "Fail"); ;
+                var fail = helper.NodeName(helper.Root(), "Fail"); ;
                 int failPageId = fail.Id;
 
                 var redirectPage = Umbraco.Content(failPageId); //page id here

@@ -30,8 +30,8 @@ namespace kongcore.dk.Core.Controllers
                     throw new Exception();
 
                 helper = new ContentHelper(Umbraco, CurrentPage);
-                IPublishedContent root = helper._Root();
-                IPublishedContent current = helper._CurrentRoot();
+                IPublishedContent root = helper.Root();
+                IPublishedContent current = helper.RootCurrent();
 
                 string message =
                     model.name + "<br />" +
@@ -44,8 +44,8 @@ namespace kongcore.dk.Core.Controllers
                 ViewBag.page = "submitsuccess";
                 ViewBag.bodytext = "Besked sendt";
 
-                BIZ_Master biz = new BIZ_Master();
-                DTO_Master master = new DTO_Master(CurrentPage);
+                BIZ_Settings biz = new BIZ_Settings();
+                DTO_Settings master = new DTO_Settings(CurrentPage);
                 master = biz.ToDTO(ViewData, helper);
                 ViewBag.master = master;
 
@@ -79,8 +79,8 @@ namespace kongcore.dk.Core.Controllers
                     throw new Exception();
 
                 helper = new ContentHelper(Umbraco, CurrentPage);
-                IPublishedContent root = helper._Root();
-                IPublishedContent current = helper._CurrentRoot();
+                IPublishedContent root = helper.Root();
+                IPublishedContent current = helper.RootCurrent();
 
                 BIZ_BlogMain biz_blog = new BIZ_BlogMain();
                 DTO_BlogMain dto = biz_blog.ToDTO(helper, model);
@@ -89,8 +89,8 @@ namespace kongcore.dk.Core.Controllers
                 ViewBag.page = "blogmain";
                 ViewBag.bodytext = helper.GetValue(current, "blogTitle");
 
-                BIZ_Master biz_master = new BIZ_Master();
-                DTO_Master master = new DTO_Master(CurrentPage);
+                BIZ_Settings biz_master = new BIZ_Settings();
+                DTO_Settings master = new DTO_Settings(CurrentPage);
                 master = biz_master.ToDTO(ViewData, helper);
                 ViewBag.master = master;
 
@@ -103,7 +103,7 @@ namespace kongcore.dk.Core.Controllers
                 if (helper.IsNull())
                     helper = new ContentHelper(Umbraco, CurrentPage);
 
-                var fail = helper.NodeName(helper._Root(), "Fail"); ;
+                var fail = helper.NodeName(helper.Root(), "Fail"); ;
                 int failPageId = fail.Id;
 
                 var redirectPage = Umbraco.Content(failPageId); //page id here

@@ -13,12 +13,12 @@ namespace kongcore.dk.Core.Models.BIZ
             if (alt.IsNull())
                 throw new Exception();
 
-            IPublishedContent item = helper.GetMedia2(helper._CurrentRoot(), elem);
+            IPublishedContent item = helper.GetMedia2(helper.RootCurrent(), elem);
             if (item.IsNull())
                 throw new Exception();
 
             string url = item.Url();
-            string article_title = "" + helper._CurrentRoot().Value(alt);
+            string article_title = "" + helper.RootCurrent().Value(alt);
             Img _i = new Img() { url = url, alt = article_title };
 
             return _i;
@@ -26,10 +26,10 @@ namespace kongcore.dk.Core.Models.BIZ
 
         public DTO_ArticleItem ToDTO(ContentHelper helper) 
         {
-            IPublishedContent root = helper._Root();
-            IPublishedContent current = helper._CurrentRoot();
+            IPublishedContent root = helper.Root();
+            IPublishedContent current = helper.RootCurrent();
 
-            DTO_ArticleItem dto = new DTO_ArticleItem(helper._CurrentRoot());
+            DTO_ArticleItem dto = new DTO_ArticleItem(helper.RootCurrent());
 
             dto.articleTitle = helper.GetValue(current, "articleTitle");
             dto.articleLink = helper.GetValue(current, "articleLink");

@@ -6,11 +6,11 @@ using Umbraco.Core.Models.PublishedContent;
 
 namespace kongcore.dk.Core.Models.BIZ
 {
-    public class BIZ_Master
+    public class BIZ_Settings
     {
-        public DTO_Master ToDTO(ViewDataDictionary view, ContentHelper helper)
+        public DTO_Settings ToDTO(ViewDataDictionary view, ContentHelper helper)
         {
-            DTO_Master dto = new DTO_Master(helper._Root());
+            DTO_Settings dto = new DTO_Settings(helper.Root());
 
             switch ((string)view["page"])
             {
@@ -18,7 +18,7 @@ namespace kongcore.dk.Core.Models.BIZ
                     dto.alt = "alt2";
                     break;
                 case "casesmain":
-                    dto.alt = "alt1";
+                    dto.alt = "alt4";
                     break;
                 case "blogmain":
                     dto.alt = "alt3";
@@ -28,30 +28,31 @@ namespace kongcore.dk.Core.Models.BIZ
                     break;
             }
                         
-            IPublishedContent root = helper._Root();
-            IPublishedContent current = helper._CurrentRoot();
+            IPublishedContent root = helper.Root();
+            IPublishedContent current = helper.RootCurrent();
 
             //var selection = root.Nodes(site);
-            var campNode = helper.NodeType(root, "campaignMain");
+            //var campNode = helper.NodeType(root, "campaignMain");
             var settingsNode = helper.NodeType(root, "settings");
-            var masterNode = helper.NodeType(root, "master");
+            //var masterNode = helper.NodeType(root, "master");
 
-            if (campNode.IsNull())
-                throw new Exception();
             if (settingsNode.IsNull())
                 throw new Exception();
 
-            string camp = helper.GetPropertyValue(campNode, "campaignText");
-            string link = helper.GetPropertyValue(campNode, "campaignLink");
-            string text = helper.GetPropertyValue(campNode, "campaignLinkText");
+            //campaign
+            string camp = helper.GetPropertyValue(settingsNode, "campaignText");
+            string link = helper.GetPropertyValue(settingsNode, "campaignLink");
+            string text = helper.GetPropertyValue(settingsNode, "campaignLinkText");
             dto.camp = camp;
             dto.camp_link = link;
             dto.camp_text = text.Replace(" ", "&nbsp;");
 
+            //settings
             dto.sitename = helper.GetPropertyValue(settingsNode, "siteName");
             dto.slogan1 = helper.GetPropertyValue(settingsNode, "siteSlogan");
             dto.slogan2 = helper.GetPropertyValue(settingsNode, "siteSlogan2");
 
+            //footer
             dto.footerTextContact = helper.GetValueFallback(root, "footerTextContact").Replace(" ", " ");
             dto.footerTextContact2 = helper.GetValueFallback(root, "footerTextContact2").FormatEmailSimple();
             dto.footerTextContact3 = helper.GetValueFallback(root, "footerTextContact2");
@@ -60,8 +61,9 @@ namespace kongcore.dk.Core.Models.BIZ
             dto.year = DateTime.Now.Year.ToString();
             dto.footerText2 = helper.GetValueFallback(root, "footerText2");
 
-            dto.title = helper.GetPropertyValue(masterNode, "title");
-            dto.description = helper.GetPropertyValue(masterNode, "description");
+            //master
+            dto.title = helper.GetPropertyValue(settingsNode, "title");
+            dto.description = helper.GetPropertyValue(settingsNode, "description");
 
             return dto;
         }

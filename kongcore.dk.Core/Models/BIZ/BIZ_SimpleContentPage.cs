@@ -8,8 +8,8 @@ namespace kongcore.dk.Core.Models.BIZ
     {
         public DTO_SimpleContentPage ToDTO(ContentHelper helper)
         {
-            IPublishedContent root = helper._Root();
-            IPublishedContent current = helper._CurrentRoot();
+            IPublishedContent root = helper.Root();
+            IPublishedContent current = helper.RootCurrent();
 
             DTO_SimpleContentPage dto = new DTO_SimpleContentPage(current);
 

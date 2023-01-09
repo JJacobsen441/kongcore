@@ -12,7 +12,7 @@ namespace kongcore.dk.Core.Models.BIZ
         {
             List<IPublishedContent> skills = new List<IPublishedContent>();
 
-            skills = helper.NodesType(helper._CurrentRoot(), "skillsItem");//.OrderByDescending(x => x.CreateDate).ToList();
+            skills = helper.NodesType(helper.RootCurrent(), "skillsItem");//.OrderByDescending(x => x.CreateDate).ToList();
             //dto.skills = helper.GetItems(selection, null, "skillTitle", "skillContent", null);
 
             if (skills.IsNull())
@@ -29,11 +29,11 @@ namespace kongcore.dk.Core.Models.BIZ
 
             return items;
         }
-
+                
         public DTO_SkillsMain ToDTO(ContentHelper helper)
         {
-            IPublishedContent root = helper._Root();
-            IPublishedContent current = helper._CurrentRoot();
+            IPublishedContent root = helper.Root();
+            IPublishedContent current = helper.RootCurrent();
 
             DTO_SkillsMain dto = new DTO_SkillsMain(current);
 
@@ -51,6 +51,11 @@ namespace kongcore.dk.Core.Models.BIZ
             dto.block2header = helper.GetPropertyValue(block3Node, "block2Header");
             dto.block2text = helper.GetPropertyValue(block3Node, "block2Text").FormatParagraph();
             dto.block2buttontext = helper.GetPropertyValue(block3Node, "block2ButtonText");
+
+            List<string> quotes = GeneralHelper.GetQuotes(helper, true);
+            dto.quote1 = quotes[0];
+            dto.quote2 = quotes[1];
+            dto.quote3 = quotes[2];
 
             return dto;
         }

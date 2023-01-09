@@ -14,7 +14,7 @@ namespace kongcore.dk.Core.Models.BIZ
         {
             List<IPublishedContent> sites = new List<IPublishedContent>();
 
-            IPublishedContent article = helper.NodeType(helper._Root(), "articles");
+            IPublishedContent article = helper.NodeType(helper.Root(), "articles");
             sites = helper.NodesType(article, "articlesItem").OrderByDescending(x => x.CreateDate).ToList();
             //dto.sites = helper.GetItems(articles.ToList(), "articleImageBW", null, null, "articleLink");
 
@@ -40,8 +40,8 @@ namespace kongcore.dk.Core.Models.BIZ
 
         public DTO_HomePage ToDTO(ContentHelper helper)
         {
-            IPublishedContent root = helper._Root();
-            IPublishedContent current = helper._CurrentRoot();
+            IPublishedContent root = helper.Root();
+            IPublishedContent current = helper.RootCurrent();
 
             DTO_HomePage dto = new DTO_HomePage(current);
             dto.aboutTitle = helper.GetValue(current, "aboutTitle");
@@ -58,11 +58,14 @@ namespace kongcore.dk.Core.Models.BIZ
             dto.bodyText3 = helper.GetValue(current, "bodyText3").FormatParagraph();
             dto.bodyText4Header = helper.GetValue(current, "bodyText4Header");
             dto.bodyText4 = helper.GetValue(current, "bodyText4").FormatParagraph();
+            dto.bodyText5Header = helper.GetValue(current, "bodyText5Header");
+            dto.bodyText5 = helper.GetValue(current, "bodyText5").FormatParagraph();
 
-            dto.quote1 = helper.GetValue(current, "quote1");
-            dto.quote2 = helper.GetValue(current, "quote2");
-            dto.quote3 = helper.GetValue(current, "quote3");
-
+            List<string> quotes = GeneralHelper.GetQuotes(helper, false);
+            dto.quote1 = quotes[0];
+            dto.quote2 = quotes[1];
+            dto.quote3 = quotes[2];
+            
             IPublishedContent block1Node = helper.NodeType(root, "block1");
             dto.block1header = helper.GetPropertyValue(block1Node, "block1Header");
             dto.block1text = helper.GetPropertyValue(block1Node, "block1Text").FormatParagraph();

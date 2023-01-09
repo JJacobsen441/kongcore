@@ -30,6 +30,8 @@ namespace kongcore.dk.Core.Models.DTOs
         public string bodyText3 { get; set; }
         public string bodyText4Header { get; set; }
         public string bodyText4 { get; set; }
+        public string bodyText5Header { get; set; }
+        public string bodyText5 { get; set; }
         public string conclusionTitle { get; set; }
         public string conclusionText { get; set; }
 
