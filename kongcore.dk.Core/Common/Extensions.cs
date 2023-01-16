@@ -11,7 +11,7 @@ namespace kongcore.dk.Core.Common
         public static string FormatParagraph(this string _s)
         {
             if (string.IsNullOrEmpty(_s))
-                throw new Exception();
+                return "";
 
             return StaticsHelper.RemoveFirstParagraphTag(StaticsHelper.RichStrip("" + _s));
         }
@@ -19,7 +19,7 @@ namespace kongcore.dk.Core.Common
         public static string RichStrip(this string _s)
         {
             if (string.IsNullOrEmpty(_s))
-                throw new Exception();
+                return "";
 
             return StaticsHelper.RichStrip("" + _s);
         }
@@ -27,7 +27,7 @@ namespace kongcore.dk.Core.Common
         public static string FormatEmailAdvanced(this string _s)
         {
             if (string.IsNullOrEmpty(_s))
-                throw new Exception();
+                return "";
 
             return StaticsHelper.RichStrip("" +
                    StaticsHelper.FormatEmailIcon("" +
@@ -38,7 +38,7 @@ namespace kongcore.dk.Core.Common
         public static string FormatEmailSimple(this string _s)
         {
             if (string.IsNullOrEmpty(_s))
-                throw new Exception();
+                return "";
 
             return StaticsHelper.FormatMail("" + _s);
         }
@@ -46,7 +46,7 @@ namespace kongcore.dk.Core.Common
         public static MvcHtmlString HtmlWithBreaksFor(this HtmlHelper html, string text/*, Expression<Func<TModel, TValue>> expression*/)
         {
             if (string.IsNullOrEmpty(text))
-                throw new Exception();
+                return MvcHtmlString.Create("");
 
             string model = "" + html.Raw(text.Replace(Environment.NewLine, "<br />"));
 
@@ -56,7 +56,7 @@ namespace kongcore.dk.Core.Common
         public static string StringWithBreaksFor(string text)
         {
             if (string.IsNullOrEmpty(text))
-                throw new Exception();
+                return "";
 
             string model = "" + text.Replace(Environment.NewLine, "<br />");
 
@@ -66,7 +66,7 @@ namespace kongcore.dk.Core.Common
         public static string HtmlEncode(string html)
         {
             if (string.IsNullOrEmpty(html))
-                throw new Exception();
+                return "";
 
             var httpUtil = new HttpServerUtilityWrapper(HttpContext.Current.Server);
             string encoded = httpUtil.HtmlEncode(html).Replace(Environment.NewLine, "<br />");

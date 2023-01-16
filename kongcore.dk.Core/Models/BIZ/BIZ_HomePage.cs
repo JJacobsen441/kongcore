@@ -60,6 +60,8 @@ namespace kongcore.dk.Core.Models.BIZ
             dto.bodyText4 = helper.GetValue(current, "bodyText4").FormatParagraph();
             dto.bodyText5Header = helper.GetValue(current, "bodyText5Header");
             dto.bodyText5 = helper.GetValue(current, "bodyText5").FormatParagraph();
+            dto.bodyText6Header = helper.GetValue(current, "bodyText6Header");
+            dto.bodyText6 = helper.GetValue(current, "bodyText6").FormatParagraph();
 
             List<string> quotes = GeneralHelper.GetQuotes(helper, false);
             dto.quote1 = quotes[0];
