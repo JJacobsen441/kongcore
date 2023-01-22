@@ -1,4 +1,4 @@
-﻿using kongcore.dk.Core.Common;
+﻿using kongcore.dk.Core._Statics;
 using kongcore.dk.Core.Models.DTOs;
 using Umbraco.Core.Models.PublishedContent;
 

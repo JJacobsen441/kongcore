@@ -16,6 +16,14 @@
         public string create_date { get; set; }
     }/**/
 
+    public class Product
+    {
+        public string id { get; set; }
+        public string item_url { get; set; }
+        public string product_name { get; set; }
+        public string product_price { get; set; }
+    }
+
     public class Skill
     {
         public string title { get; set; }

@@ -1,4 +1,4 @@
-﻿using kongcore.dk.Core.Common;
+﻿using kongcore.dk.Core._Statics;
 using kongcore.dk.Core.Models.DTOs;
 using System;
 using System.Collections.Generic;
@@ -64,7 +64,7 @@ namespace kongcore.dk.Core.Models.BIZ
             BIZ_ArticlesMain biz_articles = new BIZ_ArticlesMain();
             dto.articles = biz_articles.GetArticles(helper);
 
-            List<string> quotes = GeneralHelper.GetQuotes(helper, true);
+            List<string> quotes = DataHelper.GetQuotes(helper, true);
             dto.quote1 = quotes[0];
             dto.quote2 = quotes[1];
             dto.quote3 = quotes[2];

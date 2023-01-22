@@ -10,7 +10,8 @@ namespace kongcore.dk.Core.Models.DB
         }
 
         public virtual DbSet<MyUser> myuser { get; set; }
-        
+        public virtual DbSet<MyOrder> myorder { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             

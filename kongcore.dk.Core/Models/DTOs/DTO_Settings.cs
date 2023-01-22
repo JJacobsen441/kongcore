@@ -1,9 +1,4 @@
-﻿using kongcore.dk.Core.Common;
-using System;
-using System.Collections.Generic;
-using System.Web.Mvc;
-using Umbraco.Core.Models.PublishedContent;
-using Umbraco.Web;
+﻿using Umbraco.Core.Models.PublishedContent;
 
 namespace kongcore.dk.Core.Models.DTOs
 {

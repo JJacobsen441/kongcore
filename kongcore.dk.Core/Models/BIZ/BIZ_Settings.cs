@@ -1,4 +1,4 @@
-﻿using kongcore.dk.Core.Common;
+﻿using kongcore.dk.Core._Statics;
 using kongcore.dk.Core.Models.DTOs;
 using System;
 using System.Web.Mvc;
@@ -29,7 +29,7 @@ namespace kongcore.dk.Core.Models.BIZ
             }
                         
             IPublishedContent root = helper.Root();
-            IPublishedContent current = helper.RootCurrent();
+            //IPublishedContent current = helper.RootCurrent();
 
             //var selection = root.Nodes(site);
             //var campNode = helper.NodeType(root, "campaignMain");
