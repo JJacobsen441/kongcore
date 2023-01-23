@@ -47,9 +47,12 @@ namespace kongcore.dk.Core._Statics
                         req.Headers.Add("Authorization", _secret);
 
                     HttpResponseMessage res = client.SendAsync(req).Result;
-                    if (res.IsNull() ||!res.IsSuccessStatusCode)
+                    if (res.IsNull())
                         return null;
-                    
+
+                    if (!res.IsSuccessStatusCode)
+                        return null;
+
                     string _res = res.Content.ReadAsStringAsync().Result;
                     return _res;
                 }
