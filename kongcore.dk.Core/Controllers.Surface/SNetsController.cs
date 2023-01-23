@@ -49,7 +49,7 @@ namespace kongcore.dk.Core.Controllers.Surface
                 ShoppingCart sc = new ShoppingCart();
                 OrderItemOBJ model = sc.GetOrderByToken(guid);
                 if (model.IsNull())
-                    return Json(new { success = false });
+                    return Json(new { success = false, res = "Beklager, der skete en fejl!" });
 
                 double ship_fee = 0.0d;
                 if (method == "Home")
@@ -61,7 +61,7 @@ namespace kongcore.dk.Core.Controllers.Surface
                 else if (method == "Free")
                     ship_fee = 0.0;
                 else
-                    return Json(new { success = false });
+                    return Json(new { success = false, res = "Beklager, der skete en fejl!" });
 
                 //byte[] _crypt = StaticsHelper.AppSettings("crypt").Split('-').Select(x => Convert.ToByte(x, 16)).ToArray();
                 //byte[] _auth = StaticsHelper.AppSettings("auth").Split('-').Select(x => Convert.ToByte(x, 16)).ToArray();
@@ -101,7 +101,7 @@ namespace kongcore.dk.Core.Controllers.Surface
 
                 StaticsHelper.Log("Nets, PaymentID res: " + (res == null ? "NULL" : "'" + res + "'"));
                 if (res.IsNull())
-                    return Json(new { success = false });
+                    return Json(new { success = false, res = "Beklager, der skete en fejl!" });
 
                 Dictionary<string, string> _r = JsonConvert.DeserializeObject<Dictionary<string, string>>(res);
                 string payment_id = _r["paymentId"];
