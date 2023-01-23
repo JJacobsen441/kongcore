@@ -15,6 +15,8 @@ namespace kongcore.dk.Core._Statics
                 return "";
             _ok = true;
 
+            name = name.Trim().ToLower();
+
             string[] na = name.Split(' ');
             bool ok;
             ValidateHelper.Sanitize(name, false, true, true, new List<string>() { "notag" }, CharacterHelper.All(false), out ok);
@@ -32,6 +34,8 @@ namespace kongcore.dk.Core._Statics
                 return "";
             _ok = true;
 
+            address = address.Trim().ToLower();
+
             return _ok ? address : "";
         }
 
@@ -41,6 +45,8 @@ namespace kongcore.dk.Core._Statics
             if (nr.IsNullOrEmpty())
                 return "";
             _ok = true;
+
+            nr = nr.Trim().ToLower();
 
             int n;
             if (int.TryParse(nr, out n))
@@ -57,6 +63,8 @@ namespace kongcore.dk.Core._Statics
                 if (email.IsNullOrEmpty())
                     return "";
                 _ok = true;
+
+                email = email.Trim().ToLower();
 
                 var addr = new System.Net.Mail.MailAddress(email);
                 _ok &= addr.Address == email;

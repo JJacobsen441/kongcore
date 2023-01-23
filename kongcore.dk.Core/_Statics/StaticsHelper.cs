@@ -33,7 +33,7 @@ namespace kongcore.dk.Core._Statics
         {
             try
             {
-                if (false)
+                if (true)
                     return;
 
                 string nd = Path.DirectorySeparatorChar.ToString();

@@ -112,13 +112,13 @@ namespace kongcore.dk.Core.Controllers.Surface
             {
                 bool ok1, ok2, ok3, ok4, ok5, ok6, ok7;
                 
-                CheckHelper.IsValidPhonenumber(phone, out ok1);
-                CheckHelper.IsValidEmail(email, out ok2);
-                CheckHelper.IsValidAddress(street, out ok3);
-                CheckHelper.IsValidAddress(area, out ok4);
-                CheckHelper.IsValidAddress(town, out ok5);
-                CheckHelper.IsValidAddress(country, out ok6);
-                CheckHelper.IsValidFullName(name, out ok7);
+                phone = CheckHelper.IsValidPhonenumber(phone, out ok1);
+                email = CheckHelper.IsValidEmail(email, out ok2);
+                street = CheckHelper.IsValidAddress(street, out ok3);
+                area = CheckHelper.IsValidAddress(area, out ok4);
+                town = CheckHelper.IsValidAddress(town, out ok5);
+                country = CheckHelper.IsValidAddress(country, out ok6);
+                name = CheckHelper.IsValidFullName(name, out ok7);
                 
 
                 if (ok1 && ok2 && ok3 && ok4 && ok5 && ok6 && ok7)
