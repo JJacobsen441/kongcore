@@ -13,7 +13,7 @@ namespace kongcore.dk.Core._Statics
             if (string.IsNullOrEmpty(_s))
                 return "";
 
-            return StaticsHelper.RemoveFirstParagraphTag(StaticsHelper.RichStrip("" + _s));
+            return StaticsHelper.FormatParagraph(StaticsHelper.RichStrip("" + _s));
         }
 
         public static string RichStrip(this string _s)

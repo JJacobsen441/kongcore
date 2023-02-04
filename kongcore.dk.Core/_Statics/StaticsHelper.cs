@@ -109,7 +109,7 @@ namespace kongcore.dk.Core._Statics
             return html;
         }
 
-        public static string RemoveFirstParagraphTag(string html)
+        public static string FormatParagraph(string html)
         {
             if (String.IsNullOrEmpty(html))
                 return "";
@@ -120,11 +120,13 @@ namespace kongcore.dk.Core._Statics
                 {
                     html = html.Substring(3, html.Length - 3);
                     html = html.Substring(0, html.Length - 4);
+                    html = html.Replace("</p>\n<p>", "<br /><br />");
                 }
             }
+
             return html;
         }
-
+        
         private static string RegEx(string inputString) 
         {
             if (String.IsNullOrEmpty(inputString))
