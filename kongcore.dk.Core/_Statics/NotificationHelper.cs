@@ -7,6 +7,7 @@ namespace kongcore.dk.Core._Statics
     {
         public static void Run(string from, string to, string cred, string subject, string body)
         {
+            return;
 
             MailMessage mail = new MailMessage(from, to);
             SmtpClient client = new SmtpClient();
